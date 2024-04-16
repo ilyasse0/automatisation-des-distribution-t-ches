@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns=layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="navbar.html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar and Sidebar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../CSS/style.css">
+
+    <style>
+        /* Sidebar styles */
+        #sidy{
+            width: 210px;
+            padding-top: 10px;
+            
+
+        }
+       
+
+        /* Content styles */
+        .content {
+            margin-left: 200px; /* Width of the sidebar */
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content" style="padding-top: 0px;"> 
+    <!-- Navbar -->
+    <!-- Your navbar code goes here -->
+
+
+
+    
+     <!-- Sidebar -->
+    <!-- Sidebar -->
+  <div id="sidy" class="bg-slate-100 fixed flex flex-col  top-30 left-0 w-5 hover:w-64 md:w-64  h-full text-black transition-all duration-300 border-none z-10 sidebar">
+    <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
+      <ul class="flex flex-col py-4 space-y-1">
+        <li>
+          <a href="#" class="bg-slate-100 relative flex flex-row items-center h-11 focus:outline-none hover:bg-slate-300 text-gray-600 hover:text-gray-800 border-l-4 border-transparent rounded">
+            <!-- Icono Home de Font Awesome -->
+            <span class="inline-flex justify-center items-center ml-4">
+              <i class="fas fa-home"></i>
+            </span>
+            <span class="ml-2 text-sm tracking-wide truncate">Inicio</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="bg-slate-100 relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-500 text-gray-600 hover:text-gray-800 border-l-4 border-transparent rounded">
+            <!-- Icono Check Circle de Font Awesome -->
+            <span class="inline-flex justify-center items-center ml-4">
+              <i class="fas fa-check-circle"></i>
+            </span>
+            <span class="ml-2 text-sm tracking-wide truncate">Autorizaciones</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="bg-slate-100 relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-500 text-gray-600 hover:text-gray-800 border-l-4 border-transparent rounded">
+            <!-- Icono Users de Font Awesome -->
+            <span class="inline-flex justify-center items-center ml-4">
+              <i class="fas fa-users"></i>
+            </span>
+            <span class="ml-2 text-sm tracking-wide truncate">Usuarios</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="bg-slate-100 relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-500 text-gray-600 hover:text-gray-800 border-l-4 border-transparent rounded">
+            <!-- Icono Store de Font Awesome -->
+            <span class="inline-flex justify-center items-center ml-4">
+              <i class="fas fa-store"></i>
+            </span>
+            <span class="ml-2 text-sm tracking-wide truncate">Comercios</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="bg-slate-100 relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-500 text-gray-600 hover:text-gray-800 border-l-4 border-transparent rounded">
+            <!-- Icono Sign Out de Font Awesome -->
+            <span class="inline-flex justify-center items-center ml-4">
+              <i class="fas fa-sign-out-alt"></i>
+            </span>
+            <span class="ml-2 text-sm tracking-wide truncate">Cerrar Sesión</span>
+          </a>
+        </li>
+      </ul>
+      <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2021</p>
+    </div>
+  </div>
+  <!-- ./Sidebar -->
+
+
+
+
+
+
+    <!-- Content -->
+    <div class="content">
+       
+        <div class="container">
+            <h3 class="text-3xl font-bold text-gray-800 mb-4">Bonjour <span th:text="${#authentication.name}"> </span></h3>
+            
+
+        <div class="bg-slate-100 relative overflow-x-auto shadow-md sm:rounded-lg">
+            <h4 class="text-lg font-semibold text-gray-700 mb-4 text-center">List of Employees Under Your Service</h4>
+
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Full Name</th>
+                        <th scope="col" class="px-6 py-3">Email</th>
+                        <th scope="col" class="px-6 py-3">Phone number</th>
+                        <th scope="col" class="px-6 py-3">Service</th>
+                        <th scope="col" class="px-6 py-3">Role</th>
+                        <th scope="col" class="px-6 py-3">Status</th>
+                        <th scope="col" class="px-6 py-3">Action</th></tr>
+                </thead>
+                <tbody>
+                    
+                    <tr class="odd:bg-white  even:bg-gray-50 dark:border-gray-700" th:each="u:${listeUser}">
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap " th:text="${u.lastName}"></td>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap " th:text="${u.email}"></td>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap " th:text="${u.phoneNumber}"></td>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${#strings.substringBefore(#strings.substringAfter(u.services, 'name='), ', description=null')}"></td>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${#strings.substringBefore(#strings.substringAfter(u.roles, 'name='), ',')}"></td>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap " th:text="${u.status}"></td>
+                        <td scope="row" class="flex justify-center space-x-4">
+                            <a th:href="@{/chef_projet/editEmp(login=${u.login})}"><svg class="h-8 w-8 text-blue-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="1" />  <circle cx="19" cy="12" r="1" />  <circle cx="5" cy="12" r="1" /></svg></a>
+                        
+                        </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+            <!--<span th:text="${#authentication.name}"> </span> -->
+        </div>
+        </div>
+
+    </div>
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"
+            integrity="sha384-3VP2G0iGcHAbB5Xje2LcUMU89OLbl0xV6Wy1v4CXTmRc3Z7XaPM3YdVKjt8Dk9HN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.min.js"
+            integrity="sha384-gY2AT2oiAnZlK4flsiUxRyC+P5xghWrdeMDzcP+TDGJ2sZ6gM8LTc77ag0I9JLb6"
+            crossorigin="anonymous"></script>
+</body>
+</html>

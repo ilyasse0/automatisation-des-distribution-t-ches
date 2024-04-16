@@ -1,0 +1,15 @@
+
+/* Sidebar styles */
+#sidy{
+    width: 210px;
+    padding-top: 10px;
+    
+
+}
+
+
+/* Content styles */
+.content {
+    margin-left: 200px; /* Width of the sidebar */
+    padding: 20px;
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns=layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="navbar.html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+</head>
+<body>
+    <div layout:fragment="content" style="padding-top: 1px;">
+        <form  th:action="@{/addTask}" method="post"> 
+          <input type="hidden" name="userId" th:value="${userId}" />
+    <div id="form" class="px-2">
+        <div class="flex flex-no-wrap items-start">
+          <div class="w-full">
+            <div class="py-4 px-2">
+              <div class="bg-white rounded shadow mt-7 py-7">
+                
+                <div class="mt-10 px-7">
+                  <p class="text-xl font-semibold leading-tight text-gray-800">
+                    Meta Details
+                  </p>
+                  <div class="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7">
+                    <div>
+                      <p class="text-base font-medium leading-none text-gray-800">
+                        Task Title:
+                      </p>
+                      <div class="relative top-1">
+                        <div class="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+                          <input required th:value="${task.title}" type="text" name="title" id="" class="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one">
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <div>
+                      <p class="text-base font-medium leading-none text-gray-800">
+                        Duration
+                      </p>
+                      <div class="relative top-1">
+                        <div class="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+                         <input  required th:value="${calender.duration}" type="number" class="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one">
+                         
+                        </div>
+                      </div>
+                      <p class="mt-3 text-xs leading-[15px] text-gray-600">
+                        Select a layout to show your product display
+                      </p>
+                    </div>
+                    <div>
+                      <p class="text-base font-medium leading-none text-gray-800">
+                        Start Date
+                      </p>
+                      <input  required th:value="${calender.startDate}" type="date" name="startDate" class="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                      />
+                      <p class="mt-3 text-xs leading-3 text-gray-600">
+                        Set a simple and precise meta title
+                      </p>
+                    </div>
+                    <div>
+                      <p class="text-base font-medium leading-none text-gray-800">
+                        Gravity
+                      </p>
+                      <div class="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one"> 
+                        <select  name="gravity" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                          <option th:each="gravity : ${listeGravity}" th:value="${gravity.id}" th:text="${gravity.priority}"></option>
+                          <!-- Add more options as needed -->
+                      </select>
+                      </div>
+                     
+                    </div>
+                  </div>
+                </div>
+                <div class="pt-6 border-gray-300 mt-2 px-7">
+                  <p class="text-base font-semibold leading-4 text-gray-800">
+                    Task Description
+                  </p>
+
+                  <div class="mt-10 border border-gray-300 rounded">
+                    <div
+                      class="flex flex-wrap items-center px-4 py-3 border-b border-gray-300"
+                    >
+                      <div
+                        class="flex h-full gap-2 p-2 rounded cursor-pointer hover:bg-blue-50 w-fit"
+                      >
+                        <p class="text-sm leading-none text-gray-600">Normal</p>
+                        
+                          
+                        </svg>
+                      </div>
+                      <div class="flex items-center gap-5 ml-0 lg:ml-7 md:ml-3">
+                        <button class="p-1 hover:bg-gray-100 focus:bg-gray-100">
+                         
+                          
+                         
+                        </button>
+                       
+                      </div>
+                      <div
+                        class="flex items-center justify-end ml-2 gap-x-3 lg:ml-auto md:ml-auto">
+                        <p class="text-sm leading-none text-gray-600 cursor-pointer">
+                          Add Image
+                        </p>
+                      </div>
+                    </div>
+                    <textarea
+                      class="resize-none w-full h-[170px] px-4 py-4 text-base outline-none text-slate-600"
+                      placeholder="Start typing here ..."
+                      th:value="${task.description}"
+                      required
+                      name="description"
+                    
+                    ></textarea>
+
+                    ></textarea>
+                  </div>
+                </div>
+                <p class="mt-3 text-xs leading-[15px] text-gray-600 px-7">
+                  Enter product meta description for better understanding
+                </p>
+                <hr class="h-[1px] bg-gray-100 my-14" />
+                <div
+                  class="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4"
+                >
+                  <button
+                    class="bg-white border-indigo-700 rounded hover:bg-gray-50 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-indigo-700 border lg:max-w-[95px] w-full"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" class="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+                    Add New Employee
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    
+    <style>
+        
+        .checkbox:checked {
+            /* Apply class right-0*/
+            right: 0;
+        }
+        .checkbox:checked + .toggle-label {
+            /* Apply class bg-indigo-700 */
+            background-color: #4c51bf;
+        }
+    </style>
+  
+  
+
+    <style>
+        .checkbox:checked {
+            /* Apply class right-0*/
+            right: 0;
+        }
+        
+        .checkbox:checked + .toggle-label {
+            /* Apply class bg-indigo-700 */
+            background-color: #4c51bf;
+        }
+    </style>
+  
+       
+    </div>
+</body>
+</html>
