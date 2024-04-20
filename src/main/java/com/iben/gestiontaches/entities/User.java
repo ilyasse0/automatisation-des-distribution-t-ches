@@ -54,6 +54,8 @@ public class User {
     private List<Role> roles;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Service> services;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Equipe> equipes;
 
     @Transient
     @Nullable // For Spring Data validation

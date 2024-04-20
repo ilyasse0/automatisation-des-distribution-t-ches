@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Agregar estilos para la vista de dispositivos pequeños */
+        @media (max-width: 768px) {
+            .flex-wrap {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .section-small {
+                width: 50%;
+            }
+        }
+
+        
+   
+
+    </style>
+</head>
+<body>
+<div class="flex flex-col h-screen bg-gray-100">
+
+    <!-- Barra de navegación superior -->
+    <div class="bg-white text-white shadow w-full p-2 flex items-center justify-between">
+        <div class="flex items-center">
+            <div class="hidden md:flex items-center"> <!-- Se oculta en dispositivos pequeños -->
+                <img src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png" alt="Logo" class="w-28 h-18 mr-2">
+                <h2 class="font-bold text-xl">Nombre de la Aplicación</h2>
+            </div>
+            <div class="md:hidden flex items-center"> <!-- Se muestra solo en dispositivos pequeños -->
+                <button id="menuBtn">
+                    <i class="fas fa-bars text-gray-500 text-lg"></i> <!-- Ícono de menú -->
+                </button>
+            </div>
+        </div>
+
+        <!-- Ícono de Notificación y Perfil -->
+        <div class="space-x-5">
+            <button>
+                <i class="fas fa-bell text-gray-500 text-lg"></i>
+            </button>
+            <!-- Botón de Perfil -->
+            <button>
+                <i class="fas fa-user text-gray-500 text-lg"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="flex-1 flex">
+        <!-- Barra lateral de navegación (oculta en dispositivos pequeños) -->
+        <div class="p-2 bg-white w-60 flex flex-col hidden md:flex" id="sideNav">
+            <nav>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/home">
+                    <i class="fas fa-home mr-2"></i>HOME
+                </a>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/teams">
+                    <i class="fas fa-file-alt mr-2"></i>TEAM
+                </a>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
+                    <i class="fas fa-users mr-2"></i>Usuarios
+                </a>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
+                    <i class="fas fa-store mr-2"></i>Comercios
+                </a>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
+                    <i class="fas fa-exchange-alt mr-2"></i>Transacciones
+                </a>
+            </nav>
+
+            <!-- Ítem de Cerrar Sesión -->
+            <a class="block text-gray-500 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white mt-auto" href="#">
+                <i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión
+            </a>
+
+            <!-- Señalador de ubicación -->
+            <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
+
+            <!-- Copyright al final de la navegación lateral -->
+            <p class="mb-1 px-5 py-3 text-left text-xs text-cyan-500">Copyright WCSLAT@2023</p>
+
+        </div>
+
+        <!-- Área de contenido principal -->
+            <!-- main area for the form -->
+<div class="flex-1 p-4">
+    <!-- Campo de búsqueda -->
+ 
+    <!-- Formulario para agregar un equipo -->
+    <div class="bg-white p-4 rounded-md mt-4">
+        <h2 class="text-gray-500 text-lg font-semibold pb-4">Adding New Coordinator</h2>
+
+        <!-- Formulario de Equipo -->
+        <form th:action="@{/addCord}" method="post">
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                User Information
+            </h6>
+            <div class="flex flex-wrap">
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label  class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="firstName">
+                            First Name
+                        </label>
+                        <input required th:value="${NewCor.firstName}"  type="text" id="firstName" name="firstName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                    </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="lastName">
+                            Last Name
+                        </label>
+                        <input required th:value="${NewCor.lastName}"  type="text" id="lastName" name="lastName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                    </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="email">
+                            Email Address
+                        </label>
+                        <input required th:value="${NewCor.email}"  type="email" id="email" name="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                    </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="phoneNumber">
+                            Phone Number
+                        </label>
+                        <input required th:value="${NewCor.phoneNumber}"   type="tel" id="phoneNumber" name="phoneNumber" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                    </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="sex">
+                            Sex
+                        </label>
+                        <div class="flex items-center">
+                            <input  required th:value="${NewCor.sex == null ? 'male' : user.sex}"   type="radio" id="maleInput" name="sex" value="male" class="rounded-md mr-2">
+                            <label for="maleInput" class="text-sm text-blueGray-600">Male</label>
+                            <input  required th:value="${NewCor.sex == null ? 'female' : user.sex}"  type="radio" id="femaleInput" name="sex" value="female" class="rounded-md ml-4 mr-2">
+                            <label for="femaleInput" class="text-sm text-blueGray-600">Female</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mt-6 border-b-1 border-blueGray-300">
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Account Information
+            </h6>
+            <div class="flex flex-wrap">
+                <div class="w-full lg:w-12/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" >
+                     Login
+                    </label>
+                    <input required th:value="${NewCor.login}"  name="login" type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
+                  </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                     Password
+                    </label>
+                    <input required th:value="${NewCor.password}"  type="password" name="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
+                  </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                      Confirm your Password
+                    </label>
+                    <input th:value="${NewCor.confirmPassword}"  name="confirmPassword" type="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="United States">
+                  </div>
+                </div>
+               
+              </div>
+
+            <hr class="mt-6 border-b-1 border-blueGray-300">
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Services & Team
+            </h6>
+            <div class="w-full lg:w-4/12 px-4">
+                <div class="relative  mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="servicesDropdown">
+                        Services
+                    </label>
+                    <select name="services" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                        <option th:each="service : ${listeService}" th:value="${service.id}" th:text="${service.name}"></option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+
+                <div class="relative  mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="servicesDropdown">
+                        Team
+                    </label>
+                    <select name="equipes" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                        <option th:each="equipe : ${listeEquipe}" th:value="${equipe.id}" th:text="${equipe.nom}"></option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+               
+               
+            </div>
+            <button type="submit" class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+                Add New Employee
+            </button>
+        </form>
+    </div>
+</div>
+
+                
+                  
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

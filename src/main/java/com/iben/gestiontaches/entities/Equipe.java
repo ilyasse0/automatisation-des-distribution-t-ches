@@ -1,30 +1,26 @@
 package com.iben.gestiontaches.entities;
 
-import java.util.List;
-
-import com.iben.gestiontaches.enums.statusCode;
+import com.iben.gestiontaches.enums.deactivatedFlag;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity 
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor 
+@Data  
 @Builder
-@Data
-public class Status {
+public class Equipe {
+
     @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private statusCode status;
+    private String nom;
     private String description;
-    private String useConstraint;
-    @OneToMany(mappedBy = "status")
-    private List<Task> tasks;
+    private deactivatedFlag status;
 }

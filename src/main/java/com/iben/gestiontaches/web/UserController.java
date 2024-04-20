@@ -124,7 +124,10 @@ public class UserController {
             return "redirect:/supervisor/home";
         } else if (authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_CHEF_PROJET"))) {
             return "redirect:/chef_projet/home";
-        } else {
+        }else if((authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_COR")))){
+            return "redirect:/coordinator/home";
+        }
+         else {
             throw new IllegalStateException("Unknown user this error role");
         }
     }

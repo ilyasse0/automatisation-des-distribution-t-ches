@@ -16,5 +16,7 @@ public interface TaskService {
 
     public UserTaskAssignment AffecteTaskToUser(Task task, User user);
     public  List<Task> getTasks(String userId);
+    public Task addTaskByCor(String title, String description);
+
 
 }

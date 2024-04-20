@@ -33,56 +33,59 @@ public class TaskServiceImplementation implements TaskService {
 
     @Override
     @Transactional
-public Task addTask(String title, String description, LocalDate startDate, LocalDate latestStartDate,
+ public Task addTask(String title, String description, LocalDate startDate, LocalDate latestStartDate,
          int duration, Gravity gravity, User user) {
-    try {
-      //  String taskId = UUID.randomUUID().toString();
+//     try {
+//       //  String taskId = UUID.randomUUID().toString();
 
-        // Create a new calendar
-        Calendar calendar = Calendar.builder()
-                .duration(duration)
-                .startDate(startDate)
-                .latestStartDate(latestStartDate)
-                .build();
-                calendarRepository.save(calendar);
+//         // Create a new calendar
+//         Calendar calendar = Calendar.builder()
+//                 .duration(duration)
+//                 .startDate(startDate)
+//                 .latestStartDate(latestStartDate)
+//                 .build();
+//                 calendarRepository.save(calendar);
         
         
-        Status status = statusRepository.findById(1L).get();
+//         Status status = statusRepository.findById(1L).get();
 
-        // Create a new task
-        Task task = Task.builder()
-                .calendar(calendar)
-                .title(title)
-                .description(description)
-                .date_Creation(LocalDate.now())
-                .gravity(gravity)
-                .status(status)
-                .build();
+//         // Create a new task
+//         Task task = Task.builder()
+//                 .calendar(calendar)
+//                 .title(title)
+//                 .description(description)
+//                 .date_Creation(LocalDate.now())
+//                 .gravity(gravity)
+//                 .status(status)
+//                 .build();
 
-        // Save the calendar and task
-        Task savedTask = taskRepository.save(task);
+//         // Save the calendar and task
+//         Task savedTask = taskRepository.save(task);
 
-        // Assign the task to the user
-        UserTaskAssignment userTaskAssignment = new UserTaskAssignment();
-        userTaskAssignment.setUser(user);
-        userTaskAssignment.setTask(savedTask);
-        assignmentRepository.save(userTaskAssignment);
+//         // Assign the task to the user
+//         UserTaskAssignment userTaskAssignment = new UserTaskAssignment();
+//         userTaskAssignment.setUser(user);
+//         userTaskAssignment.setTask(savedTask);
+//         assignmentRepository.save(userTaskAssignment);
 
-        return savedTask;
-    } catch (Exception e) {
-        // Handle exceptions
-        throw new RuntimeException("Error while adding task: " + e.getMessage(), e);
-    }
+//         return savedTask;
+//     } catch (Exception e) {
+//         // Handle exceptions
+//         throw new RuntimeException("Error while adding task: " + e.getMessage(), e);
+     //}
+
+     return null;
 }
 
     @Override
     public UserTaskAssignment AffecteTaskToUser(Task task, User user) {
 
-        UserTaskAssignment userTaskAssignment = new UserTaskAssignment();
-        userTaskAssignment.setUser(user);
-        userTaskAssignment.setTask(task);
-        return assignmentRepository.save(userTaskAssignment);
+        // UserTaskAssignment userTaskAssignment = new UserTaskAssignment();
+        // userTaskAssignment.setUser(user);
+        // userTaskAssignment.setTask(task);
+        // return assignmentRepository.save(userTaskAssignment);
 
+        return null;
     }
 
 
@@ -93,6 +96,15 @@ public Task addTask(String title, String description, LocalDate startDate, Local
         return tasks;
     }
 
+
+    public Task addTaskByCor(String title, String description){
+        Task task = Task.builder()
+               .title(title)
+               .description(description)
+               .date_Creation(LocalDate.now())
+               .build();
+        return taskRepository.save(task);
+    }
 
 
 }

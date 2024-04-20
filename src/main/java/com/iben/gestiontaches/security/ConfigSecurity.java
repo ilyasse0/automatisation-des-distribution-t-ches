@@ -34,8 +34,11 @@ public class ConfigSecurity {
 
         http.formLogin();
         http.authorizeHttpRequests().requestMatchers("/supervisor/**").hasRole("SUP");
-        http.authorizeHttpRequests().requestMatchers("/employee/**").hasRole("EMP");
+        http.authorizeHttpRequests().requestMatchers("/employee/**").hasRole("OP");
         http.authorizeHttpRequests().requestMatchers("/chef_projet/**").hasRole("CHEF_PROJET");
+        http.authorizeHttpRequests().requestMatchers("/cordinateur/**").hasRole("COR");
+
+
         http.authorizeHttpRequests().requestMatchers("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css").permitAll();
         http.authorizeHttpRequests().requestMatchers("../css/style.css").permitAll();
 
