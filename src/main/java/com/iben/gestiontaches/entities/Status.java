@@ -5,6 +5,7 @@ import java.util.List;
 import com.iben.gestiontaches.enums.statusCode;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,6 +26,6 @@ public class Status {
     private statusCode status;
     private String description;
     private String useConstraint;
-    @OneToMany(mappedBy = "status")
+    @OneToMany(mappedBy = "status" ,  fetch = FetchType.EAGER)
     private List<Task> tasks;
 }

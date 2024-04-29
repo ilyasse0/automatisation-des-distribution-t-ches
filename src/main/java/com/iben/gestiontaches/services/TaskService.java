@@ -12,11 +12,18 @@ import com.iben.gestiontaches.entities.UserTaskAssignment;
 
 public interface TaskService {
     public Task addTask(String title, String description, LocalDate startDate, LocalDate latestStartDate,
-             int duration ,  Gravity gravity , User user);
+            int duration, Gravity gravity, User user);
 
     public UserTaskAssignment AffecteTaskToUser(Task task, User user);
-    public  List<Task> getTasks(String userId);
-    public Task addTaskByCor(String title, String description);
 
+    public List<Task> getTasksbyCord(String userId);
+    public List<Task> getTasksbySup(String userId);
+    public List<Task> getTasksbyOp(String userId);
+
+
+
+    public Task addTaskByCor(String title, String description, Gravity gravity,String cordId,String supId);
+    public Task addTaskBySup(Long idTask, String opId , int duration , LocalDate startDate );
+    public List<Task> getTasks();
 
 }

@@ -28,13 +28,13 @@ public class UserTaskAssignment  {
 
     // Fields for storing user IDs
     @Column(name = "cor_user_id")
-    private Long corUserId;
+    private String corUserId;
 
     @Column(name = "sup_user_id")
-    private Long supUserId;
+    private String  supUserId;
 
     @Column(name = "op_user_id")
-    private Long opUserId;
+    private String  opUserId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")

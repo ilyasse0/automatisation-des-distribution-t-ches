@@ -16,10 +16,11 @@
     <!-- Your navbar code goes here -->
 
 
-  <div class="flex flex-no-wrap">
+
+    <div class="flex flex-no-wrap">
         <!-- Sidebar starts -->
         <!-- Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] -->
-        <div style="min-height: 1000px" class="w-64 absolute sm:relative bg-blue-900 shadow md:h-full flex-col justify-between hidden sm:flex">
+        <div style="min-height: 716px" class="w-64 absolute sm:relative bg-blue-900 shadow md:h-full flex-col justify-between hidden sm:flex">
             <div class="px-8">
                 <div class="bg-slate-300 rounded-full p-12  mr-5 flex items-center justify-center mt-8" style="width: 170px; height: 170px;">
                   <img class="w-full h-full" style="width: 120px; height: 100px;" src="/images/directeur.png" alt="Logo">
@@ -111,124 +112,36 @@
                     
                   </div>
               </header>
-           
-           
-           
-            <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form th:action="@{/addEmp}" method="post">
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        User Information
-                    </h6>
-                    <div class="flex flex-wrap">
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="firstName">
-                                    First Name
-                                </label>
-                                <input  th:value="${NewEmp.firstName}"  type="text" id="firstName" name="firstName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="lastName">
-                                    Last Name
-                                </label>
-                                <input  required th:value="${NewEmp.lastName}"  type="text" id="lastName" name="lastName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="email">
-                                    Email Address
-                                </label>
-                                <input required th:value="${NewEmp.email}" type="email" id="email" name="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="phoneNumber">
-                                    Phone Number
-                                </label>
-                                <input  required th:value="${NewEmp.phoneNumber}" type="tel" id="phoneNumber" name="phoneNumber" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="sex">
-                                    Sex
-                                </label>
-                                <div class="flex items-center">
-                                    <input  required th:value="${NewEmp.sex == null ? 'male' : user.sex}"   type="radio" id="maleInput" name="sex" value="male" class="rounded-md mr-2">
-                                    <label for="maleInput" class="text-sm text-blueGray-600">Male</label>
-                                    <input  required th:value="${NewEmp.sex == null ? 'female' : user.sex}"  type="radio" id="femaleInput" name="sex" value="female" class="rounded-md ml-4 mr-2">
-                                    <label for="femaleInput" class="text-sm text-blueGray-600">Female</label>
-                                </div>
-                            </div>
-                        </div>
+      
+            <div class="grid grid-cols-3 gap-6">
+                <div th:each="task : ${listeTask}" class="relative max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mt-10">
+                    <!-- Status badge -->
+                    <div class="float-right text-xs text-red-600 uppercase">
+                        <span>Status:
+                            <span th:text="${task.status_task_temp}">
+                            </span>
+                        </span>
                     </div>
-
-                    <hr class="mt-6 border-b-1 border-blueGray-300">
-
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        Account Information
-                    </h6>
-                    <div class="flex flex-wrap">
-                        <div class="w-full lg:w-12/12 px-4">
-                          <div class="relative w-full mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" >
-                             Login
-                            </label>
-                            <input required th:value="${NewEmp.login}"  name="login" type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
-                          </div>
-                        </div>
-                        <div class="w-full lg:w-4/12 px-4">
-                          <div class="relative w-full mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                             Password
-                            </label>
-                            <input  required th:value="${NewEmp.password}" type="password" name="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
-                          </div>
-                        </div>
-                        <div class="w-full lg:w-4/12 px-4">
-                          <div class="relative w-full mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                              Confirm your Password
-                            </label>
-                            <input  th:value="${NewEmp.confirmPassword}"  name="confirmPassword" type="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="United States">
-                          </div>
-                        </div>
-                       
-                      </div>
-
-                    <hr class="mt-6 border-b-1 border-blueGray-300">
-
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        Services & Roles
-                    </h6>
-                    <div class="w-full lg:w-4/12 px-4">
-                        <div class="relative  mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="servicesDropdown">
-                                Services
-                            </label>
-                            <select name="services" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                                <option th:each="service : ${listeService}" th:value="${service.id}" th:text="${service.name}"></option>
-                                <!-- Add more options as needed -->
-                            </select>
-                        </div>
-                       
+                    <br>
+                    <div class="float-right text-xs text-red-600 uppercase">
+                        <span>Gravity:
+                            <span th:text="${task.priority_temp}">
+                            </span>
+                        </span>
                     </div>
-                    <button type="submit" class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
-                        Add New Employee
-                    </button>
-                </form>
-            </div>
+                    <a href="#">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900" th:text="${task.title}"></h5>
+                    </a>
+                    <p th:text="${task.description}" class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
+                    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Read more
+                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                        </svg>
+                    </a>
+                </div>
+</div>
 
-
-     
-              
-          </div>
-
-      </div>
 
       
 

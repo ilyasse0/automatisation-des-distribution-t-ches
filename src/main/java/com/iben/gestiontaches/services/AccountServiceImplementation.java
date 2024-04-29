@@ -146,7 +146,7 @@ public class AccountServiceImplementation implements AccountService {
         }
         return userRepository.findAll().stream()
                 .filter(user -> user.getServices().contains(service))
-                .filter(user -> user.getRoles().stream().anyMatch(role -> role.getName().equals("EMP")))
+                .filter(user -> user.getRoles().stream().anyMatch(role -> role.getName().equals("OP")))
                 .collect(Collectors.toList());
 
     }

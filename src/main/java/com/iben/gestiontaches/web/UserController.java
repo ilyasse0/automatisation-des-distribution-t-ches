@@ -118,7 +118,7 @@ public class UserController {
     @GetMapping("/home")
     public String home(Authentication authentication) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        if (authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_EMP"))) {
+        if (authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_OP"))) {
             return "redirect:/employee/home";
         } else if (authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_SUP"))) {
             return "redirect:/supervisor/home";
@@ -144,7 +144,7 @@ public class UserController {
                 users.addAll(accountService.getUsersBySupervisorService(serviceId));
             }
 
-            System.out.println("u here __________________________________________");
+           
             model.addAttribute("listeUser", users);
             System.out.println("Users retrieved successfully.");
             return "supervisor/home";
@@ -163,10 +163,10 @@ public class UserController {
 
     @GetMapping("/employee/home")
     public String getTasksForEmployee(Model model, Authentication authentication) {
-        String login = authentication.getName();
-       String id= userRepository.findIdByLogin(login);
-         List<Task> tasks = taskService.getTasks(id);
-         model.addAttribute("tasks", tasks);
+         String login = authentication.getName();
+        String id= userRepository.findIdByLogin(login);
+          List<Task> tasks = taskService.getTasksbyOp(id);
+          model.addAttribute("tasks", tasks);
          //System.out.println("--------------------------------");
         // System.out.println(tasks);
         return "employee/home";

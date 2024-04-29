@@ -126,7 +126,23 @@
                         <tr class="odd:bg-white  even:bg-gray-50 dark:border-gray-700" th:each="equipe:${equipe}">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${equipe.nom}"></td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${equipe.status}"></td>
-                            <td><a href="">more</a></td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap " >
+                                <div class="inline-block text-yellow-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                  </svg>
+                                </div>
+                                <div class="inline-block ml-4 text-red-600">
+                                   
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <a onclick="javascript:return confirm('are u sure ?')" th:href="@{/deleteEquipe(id=${equipe.id})}">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+                                </a>
+                                  </svg>
+                                </div>
+                                
+                                  
+                               </td>
                         </tr>
                     </tbody>
                     </table>
@@ -149,6 +165,8 @@
                 <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Name</th>
                 <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Email</th>
                 <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light text-right">Service</th>
+                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light text-right">Action</th>
+
             </tr>
         </thead>
         <tbody>
@@ -157,7 +175,24 @@
                 <tr class="odd:bg-white  even:bg-gray-50 dark:border-gray-700" th:each="C:${Cordinateur}">
                     <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.firstName}"></td>
                     <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.email}"></td>
-                    <td><a href="">more</a></td>
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap"><span th:each="service : ${C.services}" th:text="${service.name} + ' '"></span></td> 
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap " >
+                        <div class="inline-block text-yellow-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                        </div>
+                        <div class="inline-block ml-4 text-red-600">
+                           
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+                       
+                          </svg>
+                        </div>
+                        
+                          
+                       </td>
+
                 </tr>
             </tbody>
         </tbody>

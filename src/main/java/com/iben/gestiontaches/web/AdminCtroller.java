@@ -16,14 +16,19 @@ import com.iben.gestiontaches.entities.Gravity;
 import com.iben.gestiontaches.entities.Role;
 import com.iben.gestiontaches.entities.Service;
 import com.iben.gestiontaches.entities.Status;
+import com.iben.gestiontaches.entities.Task;
 import com.iben.gestiontaches.entities.User;
+import com.iben.gestiontaches.entities.UserTaskAssignment;
 import com.iben.gestiontaches.enums.deactivatedFlag;
 import com.iben.gestiontaches.repository.StatusRepository;
+import com.iben.gestiontaches.repository.UserRepository;
+import com.iben.gestiontaches.repository.UserTaskAssignmentRepository;
 import com.iben.gestiontaches.services.AccountServiceImplementation;
 import com.iben.gestiontaches.services.AdminServiceImplementation;
 import com.iben.gestiontaches.services.EquipeServiceImplementation;
 import com.iben.gestiontaches.services.GravityServiceImplementation;
 import com.iben.gestiontaches.services.StatusServiceImplementation;
+import com.iben.gestiontaches.services.TaskServiceImplementation;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -41,6 +46,9 @@ public class AdminCtroller {
     private GravityServiceImplementation gravityService;
     private StatusServiceImplementation statusService;
     private EquipeServiceImplementation equipeService;
+    private TaskServiceImplementation taskServiceImplementationFactory;
+    private UserTaskAssignmentRepository assignmentRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/chef_projet/FormEmp")
     public String home(Model model) {
@@ -73,11 +81,13 @@ public class AdminCtroller {
         // List<Service> services = user.getServices();
         // List<Long> serviceIds =
         // services.stream().map(Service::getId).collect(Collectors.toList());
-        List<User> users = new ArrayList<>();
-        users.addAll(accountService.getUsersByChefProjetService());
-        System.out.println("You are here __________________________________________");
-        model.addAttribute("listeUser", users);
-        System.out.println("Users retrieved successfully.");
+       
+
+        List<Task> listeTasks = taskServiceImplementationFactory.getTasks();
+        List<UserTaskAssignment> assignmentListe= new ArrayList<>();
+        model.addAttribute("listTasks", listeTasks);
+        model.addAttribute("taskUtility", new AdminCtroller(adminService, accountService, gravityService, statusService, equipeService, taskServiceImplementationFactory, assignmentRepository, userRepository));
+       
         return "chef_projet/home";
 
     }
@@ -136,6 +146,33 @@ public class AdminCtroller {
         model.addAttribute("listeEquipe", listeEquipe);
         model.addAttribute("NewCor", new User());
         return "chef_projet/FormCordinateur";
+    }
+
+    @GetMapping("/deleteEquipe")
+    public String delete(Long id) {
+        equipeService.deleteEquipe(id);
+        return "redirect:/chef_projet/teams";
+    }
+
+    public String getCorOrSupForTask(Long taskId, String role) {
+        UserTaskAssignment assignment = assignmentRepository.findByTaskId(taskId);
+        if (assignment != null) {
+            String userId = null;
+            if (role.equalsIgnoreCase("coordinator")) {
+                userId = assignment.getCorUserId();
+            } else if (role.equalsIgnoreCase("supervisor")) {
+                userId = assignment.getSupUserId();
+            }else if(role.equalsIgnoreCase("operateur")){
+                userId= assignment.getOpUserId();
+            }
+            if (userId != null) {
+                User user = userRepository.findById(userId).orElse(null);
+                if (user != null) {
+                    return user.getLastName();
+                }
+            }
+        }
+        return "EMPTY"; // or any default value indicating no coordinator or supervisor found for the task
     }
 
 }

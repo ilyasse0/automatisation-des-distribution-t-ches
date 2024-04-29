@@ -33,11 +33,13 @@ import com.iben.gestiontaches.repository.UserRepository;
 import com.iben.gestiontaches.services.AccountService;
 import com.iben.gestiontaches.services.AdminServiceImplementation;
 import com.iben.gestiontaches.services.GravityService;
+import com.iben.gestiontaches.services.MessageService;
 import com.iben.gestiontaches.services.StatusService;
 import com.iben.gestiontaches.services.TaskService;
 import com.iben.gestiontaches.web.AdminCtroller;
 import com.iben.gestiontaches.web.UserController;
-import com.iben.gestiontaches.web.supervisorController;
+import com.iben.gestiontaches.web.coordinatorController;
+//import com.iben.gestiontaches.web.supervisorController;
 
 import lombok.AllArgsConstructor;
 
@@ -49,14 +51,19 @@ public class GestiontachesApplication {
 	private RoleRepository roleRepository;
 	private ServiceRepository serviceRepository;
 	// private GravityService gravityService;
-	// private GravityRepository gravityRepository;
+	 private GravityRepository gravityRepository;
 	// private StatusRepository statusRepository;
-	// private StatusService statusService;
-	// private TaskRepository taskRepository;
-	// private TaskService taskService;
+	//private StatusService statusService;
+	private StatusRepository statusRepository;
+	private TaskRepository taskRepository;
+	 private TaskService taskService;
+	// private MessageService messageService;
 	// private supervisorController supervisorController;
 	//private AdminServiceImplementation adminServiceImplementation;
 	//private AdminCtroller adminCtroller;
+	//private coordinatorController coordinatorController;
+	//private GravityRepository gravityRepository;
+
 
 
 	public static void main(String[] args) {
@@ -89,6 +96,12 @@ public class GestiontachesApplication {
 			// "123",
 			// List.of(roleRepository.findRoleByname("EMP")),
 			// List.of(serviceRepository.findServiceByname("SAISIE")));
+			//Status st = statusRepository.findById(1L).get();
+			// Task tk = taskRepository.findById(5L).get();
+			// System.out.println("----------THE LIST--------------");
+			// //System.out.println(st);
+			// System.out.println(tk.getGravity());
+
 		};
 	}
 
@@ -128,14 +141,15 @@ public class GestiontachesApplication {
         serviceRepository.findServiceByname("CONTROLLE")));
 
 
-	    //  Gravity gravity = new Gravity();
-		//  gravity.setPriority(Priority.MEDIUM);
-		//  gravity.setDescription("this is a test gravity to see that the backend works!");
+	    //   Gravity gravity = new Gravity();
+		//   gravity.setPriority(Priority.LOW);
+		//   gravity.setDescription("this is a test gravity to see that the backend works!");
+		// gravityRepository.save(gravity);
 
-		// Status status = new Status();
-		//  status.setDescription("this a test status to see that the backend works!");
-		//  status.setUseConstraint("just a test no constraint");
-		//  status.setStatus(statusCode.IN_PROGRESS);
+		Status status = new Status();
+		 status.setDescription("this a test status to see that the backend works!");
+		 status.setUseConstraint("just a test no constraint");
+		 status.setStatus(statusCode.NOTASSIGNED);
 
 		// Calendar calendar = new Calendar();
 		// Task task = new Task();
@@ -168,7 +182,7 @@ public class GestiontachesApplication {
 			// System.out.println( controller.getUsersBySupervisorServices());
 
 			 //gravityService.addNewGravity(gravity);
-			 //statusService.addNewStatus(status);
+			// statusService.addNewStatus(status);
 			// taskService.addTask(task, calendar);
 			// supervisorController.addTask(task, calendar,"8c10d257-1c3a-48aa-9952-2f4ae2fa5fb7");
 			// taskService.AffecteTaskToUser(taskRepository.findById("20d852b9-ebde-4dea-9e2b-5fd6223eb004").get()
@@ -181,7 +195,18 @@ public class GestiontachesApplication {
 		   // adminCtroller.addEquipe(equipe);
 		   //adminCtroller.addCordinateur(userCordFortest);
 		   
-		
+		//   Gravity grv= gravityRepository.findGravityBypriority(Priority.HIGH);
+
+		//    Task task_test =new Task();
+		//    task_test.setTitle("test for the new feature");
+		//    task_test.setDescription("test description for the new feature"); 
+		//    coordinatorController.addTaskForTestOnly(task_test, grv, "06d40764-e31c-4407-aced-55ef26c47918", "c5a1d3d4-476a-44c7-830f-084afe033a52");
+
+	//	taskService.addTaskBySup(9L, "cb96b683-3280-48bf-942f-922b2690ffc4", 4, null);
+
+
+	//messageService.addMessageBySup("testing  the new message feature ", LocalDate.now(), 9L, "c5a1d3d4-476a-44c7-830f-084afe033a52");
+	// messageService.fetchMessages("06d40764-e31c-4407-aced-55ef26c47918");
 
 		
 			

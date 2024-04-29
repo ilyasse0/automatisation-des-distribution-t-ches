@@ -22,5 +22,18 @@ public class EquipeServiceImplementation implements EquipeService {
         // TODO Auto-generated method stub
         return equipeRepository.findAll();
     }
+
+    @Override
+    public void deleteEquipe(Long idTeam) {
+        // TODO Auto-generated method stub
+      Equipe equipe =  equipeRepository.findById(idTeam).get();
+      if(equipe ==null){
+        throw new IllegalStateException("Team not found please cheeck the server");
+      }else{
+        equipeRepository.delete(equipe);
+      }
+
+    }
+    
     
 }

@@ -57,11 +57,12 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Equipe> equipes;
 
+    @OneToMany(mappedBy = "user")
+    private List<Message> messages;
+
     @Transient
     @Nullable // For Spring Data validation
     private String confirmPassword;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UserTaskAssignment> taskAssignments;
-
+   
 }

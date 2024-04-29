@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.iben.gestiontaches.enums.Priority;
+import com.iben.gestiontaches.enums.statusCode;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -47,4 +50,12 @@ public class Task {
 
 @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
     private List<UserTaskAssignment> userAssignments;
+
+    @OneToMany(mappedBy = "task")
+    private List<Message> messages;
+
+    private statusCode status_task_temp;
+    private Priority priority_temp;
+
+    
 }

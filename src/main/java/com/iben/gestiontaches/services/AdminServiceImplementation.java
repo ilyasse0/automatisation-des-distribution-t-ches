@@ -100,11 +100,10 @@ public class AdminServiceImplementation implements AdminService {
     }
 
     public List<User> getCordinateur(){
-        //List<User> listeCord =  userRepository.findByRolesName("COR");
         List<User> listeCord =  userRepository.findByRolesName("COR");
 
         System.out.println("((-----------------------------------))");
-        System.out.println(listeCord);
+        //System.out.println(listeCord);
         return listeCord;
 
     }
