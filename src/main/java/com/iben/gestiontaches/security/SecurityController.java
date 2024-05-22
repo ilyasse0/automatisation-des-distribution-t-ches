@@ -14,5 +14,10 @@ public class SecurityController {
      public String notAutorised(){
         return "403";
     }
+
+    @GetMapping("/login")
+    public String login(){
+       return "login";
+   }
     
 }

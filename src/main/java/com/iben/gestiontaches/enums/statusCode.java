@@ -3,7 +3,7 @@ package com.iben.gestiontaches.enums;
 public enum statusCode {
     NOTASSIGNED,
     TODO,
-    IN_PROGRESS,
+    VALIDATIONIn_PROGRESS,
     DONE,
     CANCELLED
 }

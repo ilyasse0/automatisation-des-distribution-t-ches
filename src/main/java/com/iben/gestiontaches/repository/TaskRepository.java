@@ -28,5 +28,10 @@ List<Task> findTasksBySupUserId(@Param("supUserId") String supUserId);
 @Query("SELECT t FROM Task t JOIN t.userAssignments a WHERE a.opUserId = :opUserId")
 List<Task> findTasksByOpId(@Param("opUserId") String opUserId);
 
+
+
+@Query("SELECT t FROM Task t JOIN UserTaskAssignment uta ON t.id = uta.task.id WHERE uta.corUserId = :coordinatorId")
+List<Task> findTasksByCoordinatorId(@Param("coordinatorId") String coordinatorId);
+
     
 }

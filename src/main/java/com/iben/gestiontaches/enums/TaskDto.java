@@ -12,7 +12,7 @@ public class TaskDto  {
                     return "Not Assigned";
                 case TODO:
                     return "To Do";
-                case IN_PROGRESS:
+                case VALIDATIONIn_PROGRESS:
                     return "In Progress";
                 case DONE:
                     return "Done";

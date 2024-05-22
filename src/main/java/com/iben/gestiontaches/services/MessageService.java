@@ -14,4 +14,7 @@ public interface MessageService {
     public List<Message> fetchMessagesForSup(String user_Id , Long taskId);
     public List<Message> fetchMessagesForOp(String user_Id , Long taskId);
 
+
+    public boolean isSupervisor(String userId);
+
 }

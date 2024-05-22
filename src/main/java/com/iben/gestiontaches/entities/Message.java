@@ -24,6 +24,7 @@ public class Message {
     private Long Id;
     private String Content;
     private LocalDate date_Creation;
+    private boolean isSup;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

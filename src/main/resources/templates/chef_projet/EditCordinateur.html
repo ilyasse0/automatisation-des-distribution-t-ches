@@ -55,7 +55,6 @@
             </button>
         </div>
     </div>
-
     <!-- Contenido principal -->
     <div class="flex-1 flex">
         <!-- Barra lateral de navegación (oculta en dispositivos pequeños) -->
@@ -101,7 +100,11 @@
         <h2 class="text-gray-500 text-lg font-semibold pb-4">Adding New Coordinator</h2>
 
         <!-- Formulario de Equipo -->
-        <form th:action="@{/addCord}" method="post">
+        <form th:action="@{/chef_projet/updateCord}" method="post">
+            <input type="hidden" name="id" th:value="${userEdited.id}" />
+            <input type="hidden" name="password" th:value="${userEdited.password}">
+
+            
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 User Information
             </h6>
@@ -111,7 +114,7 @@
                         <label  class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="firstName">
                             First Name
                         </label>
-                        <input required th:value="${NewCor.firstName}"  type="text" id="firstName" name="firstName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                        <input required th:value="${userEdited.firstName}"  type="text" id="firstName" name="firstName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                     </div>
                 </div>
                 <div class="w-full lg:w-6/12 px-4">
@@ -119,7 +122,7 @@
                         <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="lastName">
                             Last Name
                         </label>
-                        <input required th:value="${NewCor.lastName}"  type="text" id="lastName" name="lastName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                        <input required th:value="${userEdited.lastName}"  type="text" id="lastName" name="lastName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                     </div>
                 </div>
                 <div class="w-full lg:w-6/12 px-4">
@@ -127,7 +130,7 @@
                         <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="email">
                             Email Address
                         </label>
-                        <input required th:value="${NewCor.email}"  type="email" id="email" name="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                        <input required th:value="${userEdited.email}"  type="email" id="email" name="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                     </div>
                 </div>
                 <div class="w-full lg:w-6/12 px-4">
@@ -135,7 +138,7 @@
                         <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="phoneNumber">
                             Phone Number
                         </label>
-                        <input required th:value="${NewCor.phoneNumber}"   type="tel" id="phoneNumber" name="phoneNumber" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                        <input required th:value="${userEdited.phoneNumber}"   type="tel" id="phoneNumber" name="phoneNumber" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                     </div>
                 </div>
                 <div class="w-full lg:w-6/12 px-4">
@@ -144,10 +147,13 @@
                             Sex
                         </label>
                         <div class="flex items-center">
-                            <input  required th:value="${NewCor.sex == null ? 'male' : user.sex}"   type="radio" id="maleInput" name="sex" value="male" class="rounded-md mr-2">
-                            <label for="maleInput" class="text-sm text-blueGray-600">Male</label>
-                            <input  required th:value="${NewCor.sex == null ? 'female' : user.sex}"  type="radio" id="femaleInput" name="sex" value="female" class="rounded-md ml-4 mr-2">
-                            <label for="femaleInput" class="text-sm text-blueGray-600">Female</label>
+                            <input required type="radio" id="maleInput" name="sex" value="male" class="rounded-md mr-2"
+                            th:checked="${userEdited.sex == 'male'}">
+                     <label for="maleInput" class="text-sm text-blueGray-600">Male</label>
+                     
+                     <input required type="radio" id="femaleInput" name="sex" value="female" class="rounded-md ml-4 mr-2"
+                            th:checked="${userEdited.sex == 'female'}">
+                     <label for="femaleInput" class="text-sm text-blueGray-600">Female</label>
                         </div>
                     </div>
                 </div>
@@ -164,26 +170,9 @@
                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" >
                      Login
                     </label>
-                    <input required th:value="${NewCor.login}"  name="login" type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
+                    <input required th:value="${userEdited.login}"  name="login" type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
                   </div>
                 </div>
-                <div class="w-full lg:w-4/12 px-4">
-                  <div class="relative w-full mb-3">
-                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                     Password
-                    </label>
-                    <input required th:value="${NewCor.password}"  type="password" name="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
-                  </div>
-                </div>
-                <div class="w-full lg:w-4/12 px-4">
-                  <div class="relative w-full mb-3">
-                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                      Confirm your Password
-                    </label>
-                    <input th:value="${NewCor.confirmPassword}"  name="confirmPassword" type="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="United States">
-                  </div>
-                </div>
-               
               </div>
 
             <hr class="mt-6 border-b-1 border-blueGray-300">
@@ -196,7 +185,7 @@
                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="servicesDropdown">
                         Services
                     </label>
-                    <select name="services" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                    <select th:value="${userEdited.services}" name="services" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                         <option th:each="service : ${listeService}" th:value="${service.id}" th:text="${service.name}"></option>
                         <!-- Add more options as needed -->
                     </select>
@@ -206,15 +195,25 @@
                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="servicesDropdown">
                         Team
                     </label>
-                    <select name="equipes" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                    <select th:value="${userEdited.equipes}" name="equipes" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                         <option th:each="equipe : ${listeEquipe}" th:value="${equipe.id}" th:text="${equipe.nom}"></option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+               
+                <div class="relative  mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="servicesDropdown">
+                        Roles
+                    </label>
+                    <select th:value="${userEdited.roles}" name="roles" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                        <option th:each="roles : ${roles}" th:value="${roles.id}" th:text="${roles.name}"></option>
                         <!-- Add more options as needed -->
                     </select>
                 </div>
                
                
             </div>
-            <button type="submit" class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+            <button type="submit" style="background-color: #143153;" class=" text-white  font-bold uppercase text-xs px-4 py-2 pt-4 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
                 Add New Employee
             </button>
         </form>

@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="../CSS/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
 </head>
 <body>
@@ -120,7 +118,7 @@
            
            
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form th:action="@{/addSup}" method="post">
+                <form th:action="@{/coordinateur/updateSupervispr/{id}(id=${userEdit.id})}" method="post">
                     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                         User Information
                     </h6>
@@ -130,7 +128,7 @@
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="firstName">
                                     First Name
                                 </label>
-                                <input  th:value="${NewSup.firstName}"  type="text" id="firstName" name="firstName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                                <input disabled th:value="${userEdit.firstName}"  type="text" id="firstName" name="firstName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-slate-200 text-red-500 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
@@ -138,7 +136,7 @@
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="lastName">
                                     Last Name
                                 </label>
-                                <input  required th:value="${NewSup.lastName}"  type="text" id="lastName" name="lastName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                                <input  required th:value="${userEdit.lastName}"  type="text" id="lastName" name="lastName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-slate-200 text-red-500 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
@@ -146,7 +144,7 @@
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="email">
                                     Email Address
                                 </label>
-                                <input required th:value="${NewSup.email}" type="email" id="email" name="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                                <input required th:value="${userEdit.email}" type="email" id="email" name="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-slate-200 text-red-500  rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
@@ -154,58 +152,35 @@
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="phoneNumber">
                                     Phone Number
                                 </label>
-                                <input  required th:value="${NewSup.phoneNumber}" type="tel" id="phoneNumber" name="phoneNumber" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                                <input  required th:value="${userEdit.phoneNumber}" type="tel" id="phoneNumber" name="phoneNumber" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-slate-200 text-red-500  rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                             </div>
                         </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="sex">
-                                    Sex
-                                </label>
-                                <div class="flex items-center">
-                                    <input  required th:value="${NewSup.sex == null ? 'male' : user.sex}"   type="radio" id="maleInput" name="sex" value="male" class="rounded-md mr-2">
-                                    <label for="maleInput" class="text-sm text-blueGray-600">Male</label>
-                                    <input  required th:value="${NewSup.sex == null ? 'female' : user.sex}"  type="radio" id="femaleInput" name="sex" value="female" class="rounded-md ml-4 mr-2">
-                                    <label for="femaleInput" class="text-sm text-blueGray-600">Female</label>
-                                </div>
-                            </div>
-                        </div>
+                       
                     </div>
 
                     <hr class="mt-6 border-b-1 border-blueGray-300">
-
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        Account Information
+                    <h6 class="text-blueGray-400 text-sm mt-3  font-bold uppercase">
+                        Account Status
                     </h6>
                     <div class="flex flex-wrap">
-                        <div class="w-full lg:w-12/12 px-4">
-                          <div class="relative w-full mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" >
-                             Login
-                            </label>
-                            <input required th:value="${NewSup.login}"  name="login" type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
-                          </div>
+                        <div class="w-full lg:w-4/12 px-4 mt-6">
+                            <div class="flex items-center">
+                                
+                                <input type="checkbox" id="activateAccount" name="activateAccount" class="form-checkbox h-5 w-5 text-blue-600" th:checked="${userEdit.status == T(com.iben.gestiontaches.enums.deactivatedFlag).ACTIVE}">
+                                <label for="activateAccount" class="ml-2 block text-sm text-blueGray-600">ACTIVE</label>
+                            </div>
                         </div>
-                        <div class="w-full lg:w-4/12 px-4">
-                          <div class="relative w-full mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                             Password
-                            </label>
-                            <input  required th:value="${NewSup.password}" type="password" name="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
-                          </div>
+                        <div class="w-full lg:w-4/12 px-4 mt-6">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="deactivateAccount" name="deactivateAccount" class="form-checkbox h-5 w-5 text-blue-600" th:checked="${userEdit.status == T(com.iben.gestiontaches.enums.deactivatedFlag).SUSPENDED}">
+                                <label for="deactivateAccount" class="ml-2 block text-sm text-blueGray-600">SUSPENDED</label>
+                            </div>
                         </div>
-                        <div class="w-full lg:w-4/12 px-4">
-                          <div class="relative w-full mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                              Confirm your Password
-                            </label>
-                            <input  th:value="${NewSup.confirmPassword}"  name="confirmPassword" type="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="United States">
-                          </div>
-                        </div>
-                       
-                      </div>
-
+                    </div>
+                    
                     <hr class="mt-6 border-b-1 border-blueGray-300">
+
+
 
                     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                         Services & Roles
@@ -213,16 +188,37 @@
                     <div class="w-full lg:w-4/12 px-4">
                         <div class="relative  mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="servicesDropdown">
-                                Services
+                                Services:
                             </label>
-                            <select name="services" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                            <select  name="services" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                                 <option th:each="service : ${listeService}" th:value="${service.id}" th:text="${service.name}"></option>
+                              <!--  <option th:each="s : ${service}" th:value="${s.id}" th:text="${s.name}" selected>Default Value</option> -->
+
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
-                       
+                        <div class="relative  mb-3">
+                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="servicesDropdown">
+                                Role:
+                            </label>
+                            <select  name="roles" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                                <option th:each="s : ${roleDefault}" th:value="${s.id}" th:text="${s.name}" selected>Default Value</option>
+
+
+                                <!-- Add more options as needed -->
+                            </select>
+
+                        </div>
+
                     </div>
-                    <button onclick="formsup()" type="submit" class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+                    <span class="text-red-500 py-11" >please make sure to have permission to change the role or the service of the user !</span>
+                    <br>
+                    <br>
+                    <span class="text-red-500 py-11 mt-12" >Please note that the update  will be store in the logs !</span>
+
+<br>
+                    <button type="submit" class="bg-blue-700 text-white mt-6 active:bg-pink-600 font-bold   px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear ">
                         Add New Employee
                     </button>
                 </form>
@@ -237,17 +233,6 @@
 
       
 
-      <script>
-        function formsup(){
-            Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Your work has been saved",
-  showConfirmButton: false,
-  timer: 5500
-});
-        }
-      </script>
 
 
 

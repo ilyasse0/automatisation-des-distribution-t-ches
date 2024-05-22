@@ -250,4 +250,33 @@ public class AccountServiceImplementation implements AccountService {
         List liste = userRepository.findEmployeesByTeamId(teamId);
         return liste;    }
 
+    @Override
+    public void deleteUser(String Id) {
+        // TODO Auto-generated method stub
+       User user = userRepository.findById(Id).get();
+       userRepository.delete(user);
+    }
+
+
+
+    @Override
+    public boolean verifyPassword(User user, String password) {
+        // Retrieve the encoded password of the user from the database
+        String encodedPassword = userRepository.findPasswordById(user.getId());
+
+        // Verify if the provided password matches the encoded password
+        return passwordEncoder.matches(password, encodedPassword);
+    }
+
+
+    @Override
+    public void updatePassword(User user, String newPassword) {
+        // Encode the new password
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        
+        // Update the user's password in the database
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+    }
+
 }

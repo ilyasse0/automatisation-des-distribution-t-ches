@@ -26,4 +26,17 @@ public interface TaskService {
     public Task addTaskBySup(Long idTask, String opId , int duration , LocalDate startDate );
     public List<Task> getTasks();
 
+
+    public void removeTask(Long idTask);
+    public Task findbyId(Long idTask);
+
+
+    public Task upadteTaskStatus(Long idTask);
+    public Task ValideTaskStatus(Long  idTask);
+
+
+    public void removeAllTasksByCoordinator(String coordinatorId);
+
+    public LocalDate calculateDeadline(Task task);
+
 }

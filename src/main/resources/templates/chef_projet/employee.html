@@ -49,11 +49,9 @@
                 <i class="fas fa-bell text-gray-500 text-lg"></i>
             </button>
             <button>
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="border border-black text-black bg-white  rounded-2xl font-bold px-7 mr-3 py-2 hover:bg-gray-200">
-                        Log Out
-                    </button>
-                </form>
+                <a href="/logout">
+                    <i class="fas fa-user text-gray-500 text-lg"></i>
+                </a>
             </button>
         </div>
     </div>
@@ -99,8 +97,9 @@
 
             <!-- Contenedor de las 4 secciones (disminuido para dispositivos pequeños) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 p-2">  
-                    <div  class="p-4 rounded-md bg-white">
-                        <h2 style="color: #143153;"  class=" text-lg font-semibold pb-1 text-black">Ongoing Tasks</h2>
+                
+                    <div class="bg-white p-4 rounded-md">
+                        <h2 class=" text-lg font-semibold pb-1">SUPERVISOR | OPERATOR </h2>
                         <div class="my1-"></div> <!-- Espacio de separación -->
                         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px  mb-6"></div> <!-- Línea con gradiente -->
                         <div class="chart-container" style="position: relative; height:150px; width:100%">
@@ -110,105 +109,128 @@
                     </div>
 
                     <!-- Sección 2 - Gráfica de Comercios -->
-                    <div  class="bg-white p-4 rounded-md">
-                        <h2  style="color: #143153;" class=" text-lg font-semibold pb-1 text-black">Completed Tasks</h2>
+                    <div class="bg-white p-4 rounded-md">
+                        <h2 class="text-black text-lg font-semibold pb-1">ACCOUNT STATUS </h2>
                         <div class="my-1"></div> <!-- Espacio de separación -->
                         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
                         <div class="chart-container" style="position: relative; height:150px; width:100%">
                             <!-- El canvas para la gráfica -->
-                            <canvas id="commercesChart"></canvas>
+                            <canvas id="AccountChart"></canvas>
                         </div>
                     </div>
- 
+
                     <!-- Sección 3 - Tabla de Autorizaciones Pendientes (disminuida para dispositivos pequeños) -->
             <div class="bg-white p-4 rounded-md">
-                <h2  style="color: #143153;" class=" text-lg font-semibold pb-4">Ongoing Tasks Lineup</h2>
+                <h2 class=" text-lg font-semibold pb-4">OPERATOR Lineup</h2>
                 <div class="my-1"></div> <!-- Espacio de separación -->
                 <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
                 <div class="relative max-w-md w-full">
                     <div class="absolute top-1 left-2 inline-flex items-center p-2">
                         <i class="fas fa-search text-gray-400"></i>
                     </div>
-                    <input class="w-full h-10 pl-10 pr-4 py-1 mb-6 text-base placeholder-black border rounded-full focus:shadow-outline" id="searchInput" type="search" placeholder="Search...">
+                    <input id="searchInput_doneTask" class="w-full h-10 pl-10 pr-4 py-1 mb-6 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" type="search" placeholder="Search here ...">
                 </div>
-                <table id="taskTable" class="w-full table-auto text-sm  font-bold">
+                <table id="OpTable" class="w-full table-auto text-sm">
                     <thead>
                         <tr class="text-sm leading-normal">
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Title</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Staus</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Cordinator</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Supervisor</th>
-                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">opertaror</th>
-
+                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Name</th>
+                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Email</th>
+                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light text-right">Service</th>
+                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light text-right">Status</th>
+                            <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light text-right">Action</th>
+            
                         </tr>
                     </thead>
-                    <tbody id="tableBody">
-                        <tr class="hover:bg-grey-lighter" th:each="task : ${listTasksUncompeted}">
-                            <td class="py-2 px-4 border-b font-sans font-normal border-grey-light" th:text="${task.title}">Juan Pérez</td>
-                            <td class="py-2 px-4 border-b font-sans font-normal" th:text="${task.status_task_temp}">Juan Pérez</td>
-                            <td class="py-2 px-4 border-b font-sans font-normal" th:text="${taskUtility.getCorOrSupForTask(task.id, 'coordinator')}">Juan Pérez</td>
-                            <td class="py-2 px-4 border-b font-sans font-normal" th:text="${taskUtility.getCorOrSupForTask(task.id, 'supervisor')}">Juan Pérez</td>
-                            <td class="py-2 px-2 border-b font-sans font-normal mr-5" th:text="${taskUtility.getCorOrSupForTask(task.id, 'operateur')}">Juan Pérez</td>
-
-
-
-
-
-
-                           
-
-                        </tr>
-                        
-                      
-                    </tbody>
-                    </table>
+                   
+                       
+                        <tbody id ="tableBody_doneTask">
+                            <tr class="odd:bg-white  even:bg-gray-50 dark:border-gray-700" th:each="C:${operatorList}">
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.firstName}"></td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.email}"></td>
+                                <td scope="row" class="px-4 py-4 font-medium text-gray-500 whitespace-nowrap"><span th:each="service : ${C.services}" th:text="${service.name} + ' '"></span></td> 
+                                <td scope="row" class="px-4 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.status}"></td>
+                                <td scope="row" class="px-1 py-4 font-medium text-gray-500 whitespace-nowrap " >
+                                    <div class="inline-block  text-yellow-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <a onclick="javascript:return confirm('are u sure ?')" th:href="@{/deleteUser(id=${C.id})}">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    </a>
+                                      </svg>
+                                    </div>
+                                    <div class="inline-block ml-4 text-red-600">
+                                   
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <a onclick="javascript:return confirm('are u sure ?')" th:href="@{/deleteUser(id=${C.id})}">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+                                      </a>
+                                        </svg>
+                                      </div>
+                                    
+                                      
+                                   </td>
+            
+                            </tr>
+                        </tbody>
+                   
+                </table>
                   
                 </div>
 
                 <!-- Sección 4 - Tabla de Transacciones (disminuida para dispositivos pequeños) -->
                      <div class="bg-white p-4 rounded-md ">
-                        <h2 style="color: #143153;" class=" text-lg font-semibold pb-4">Completed Tasks Lineup</h2>
+                        <h2 class=" text-lg font-semibold pb-4">SUPERVISOR Lineup</h2>
                         <div class="my-1"></div> <!-- Espacio de separación -->
                         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
                         <div class="relative max-w-md w-full">
                             <div class="absolute top-1 left-2 inline-flex items-center p-2">
                                 <i class="fas fa-search text-gray-400"></i>
                             </div>
-                            <input class="w-full h-10 pl-10 pr-4 py-1 mb-6 text-base placeholder-black border rounded-full focus:shadow-outline" id="searchInput_doneTask" type="search" placeholder="Search...">
+                            <input id="searchInput" class="w-full h-10 pl-10 pr-4 py-1 mb-6 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" type="search" placeholder="Search here...">
                         </div>
-    <table id="doneTable" class="w-full table-auto text-sm  font-bold">
-        <thead>
-            <tr class="text-sm leading-normal">
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Title</th>
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Staus</th>
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Cordinator</th>
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Supervisor</th>
-                <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">opertaror</th>
+                        <table id="SupList" class="w-full table-auto text-sm">
+                            <thead>
+                                <tr class="text-sm leading-normal">
+                                    <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Name</th>
+                                    <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Email</th>
+                                    <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light text-right">Service</th>
+                                    <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light text-right">Status</th>
+                                    <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light text-right">Action</th>
+                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                <tbody id="tableBody">
+                                    <tr class="odd:bg-white  even:bg-gray-50 dark:border-gray-700" th:each="C:${supervisorList}">
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.firstName}"></td>
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.email}"></td>
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap"><span th:each="service : ${C.services}" th:text="${service.name} + ' '"></span></td> 
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.status}"></td>
 
-            </tr>
-        </thead>
-        <tbody id="tableBody_doneTask" >
-            <tr class="hover:bg-grey-lighter" th:each="task : ${listTasksCompleted}">
-                <td class="py-2 px-4 border-b border-grey-light font-sans font-normal " th:text="${task.title}">Juan Pérez</td>
-                <td class="py-2 px-4 border-b border-grey-light font-sans font-normal" th:text="${task.status_task_temp}">Juan Pérez</td>
-                <td class="py-2 px-4 border-b border-grey-light font-sans font-normal" th:text="${taskUtility.getCorOrSupForTask(task.id, 'coordinator')}">Juan Pérez</td>
-                <td class="py-2 px-4 border-b border-grey-light font-sans font-normal" th:text="${taskUtility.getCorOrSupForTask(task.id, 'supervisor')}">Juan Pérez</td>
-                <td class="py-2 px-4 border-b border-grey-light font-sans font-normal" th:text="${taskUtility.getCorOrSupForTask(task.id, 'operateur')}">Juan Pérez</td>
-
-
-
-
-
-
-               
-
-            </tr>
-            
-          
-        </tbody>
-        </table>
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap " >
+                                            <div class="inline-block text-yellow-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                              </svg>
+                                            </div>
+                                            <div class="inline-block ml-4 text-red-600">
+                                   
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <a onclick="javascript:return confirm('are u sure ?')" th:href="@{/deleteUser(id=${C.id})}">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+                                              </a>
+                                                </svg>
+                                              </div>
+                                            
+                                              
+                                           </td>
+                    
+                                    </tr>
+                                </tbody>
+                            </tbody>
+                        </table>
     <!-- Botón "Ver más" para la tabla de Transacciones -->
- 
+
 </div>
                 </div>
             </div>
@@ -219,67 +241,50 @@
 
 <!-- Script para las gráficas -->
 <script>
-
-// Get the table rows containing the task data
-var tableRows = document.querySelectorAll("#taskTable tbody tr");
-
-// Initialize variables to store the count of tasks in each status
-var notAssignedCount = 0;
-var todoCount = 0;
-var inProgressCount = 0;
-
-// Loop through each table row and update the count based on the status
+var tableRows = document.querySelectorAll("#OpTable tbody tr");
+var OperateurCount = 0;
+var activeAccount =0;
+var nonActiveAccount =0;
 tableRows.forEach(function(row) {
-    var status = row.cells[1].innerText.trim(); // Assuming status is in the second column
-
-    // Increment the corresponding count based on the status
+    var status = row.cells[3].innerText.trim(); 
     switch(status) {
-        case "NOTASSIGNED":
-            notAssignedCount++;
+        case "ACTIVE":
+              activeAccount++;
             break;
-        case "TODO":
-            todoCount++;
+        case "SUSPENDED":
+              nonActiveAccount++;
             break;
-        case "VALIDATIONIn_PROGRESS":
-            inProgressCount++;
-            break;
-        // Add more cases for other statuses if needed
     }
+
+    OperateurCount++;
 });
 
-
-var tableRowsDone = document.querySelectorAll("#doneTable tbody tr");
-
-// Initialize variables to store the count of tasks in each status
-var doneTask = 0;
-var concelTask = 0;
-
-// Loop through each table row and update the count based on the status
+var tableRowsDone = document.querySelectorAll("#SupList tbody tr");
+var supCount = 0;
 tableRowsDone.forEach(function(row) {
-    var status = row.cells[1].innerText.trim(); // Assuming status is in the second column
-
-    // Increment the corresponding count based on the status
+    var status = row.cells[3].innerText.trim(); 
     switch(status) {
-        case "DONE":
-            doneTask++;
+        case "ACTIVE":
+              activeAccount++;
             break;
-        case "CANCELLED":
-              concelTask++;
+        case "SUSPENDED":
+              nonActiveAccount++;
             break;
-        // Add more cases for other statuses if needed
     }
+    supCount++;
 });
 
 
 
     // Gráfica de Usuarios
     var usersChart = new Chart(document.getElementById('usersChart'), {
-        type: 'doughnut',
+        type: 'bar',
         data: {
-            labels: ['NOTASSIGNED', 'TODO' , 'IN_PROGRESS'],
+            labels: ['OPERATUER', 'SUPERVISOR'],
             datasets: [{
-                data: [notAssignedCount, todoCount , inProgressCount],
-                backgroundColor: ['#8B8B8D', '#00F0FF', '#EAE700'],
+                label: 'Number of Users', // Label for the dataset
+                data: [OperateurCount, supCount],
+                backgroundColor: ['#8B8B8D', '#00F0FF'],
             }]
         },
         options: {
@@ -292,24 +297,24 @@ tableRowsDone.forEach(function(row) {
     });
 
     // Gráfica de Comercios
-    var commercesChart = new Chart(document.getElementById('commercesChart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Done', 'CANCELLED'],
-            datasets: [{
-                data: [doneTask, concelTask],
-                backgroundColor: ['#FEC500', '#B10300'],
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: 'bottom' // Ubicar la leyenda debajo del círculo
-            }
+    var commercesChart = new Chart(document.getElementById('AccountChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Active Account', 'Non-Active Account'],
+        datasets: [{
+            label: 'Account Status', // Add label for the dataset
+            data: [activeAccount, nonActiveAccount], // Corrected data array
+            backgroundColor: ['#FEC500', '#B10300'],
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            position: 'bottom' // Place legend at the bottom
         }
-    });
-
+    }
+});
     // Agregar lógica para mostrar/ocultar la navegación lateral al hacer clic en el ícono de menú
     const menuBtn = document.getElementById('menuBtn');
     const sideNav = document.getElementById('sideNav');
@@ -318,6 +323,7 @@ tableRowsDone.forEach(function(row) {
         sideNav.classList.toggle('hidden'); // Agrega o quita la clase 'hidden' para mostrar u ocultar la navegación lateral
     });
 </script>
+
 
 
 <script>
@@ -380,5 +386,7 @@ tableRowsDone.forEach(function(row) {
     // Add event listener to input field to trigger filtering on input
     document.getElementById("searchInput_doneTask").addEventListener("input", filterTable);
 </script>
+
+
 </body>
 </html>

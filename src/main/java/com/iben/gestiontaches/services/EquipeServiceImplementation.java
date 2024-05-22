@@ -34,6 +34,14 @@ public class EquipeServiceImplementation implements EquipeService {
       }
 
     }
+
+    @Override
+    public Equipe findTeam(Long idTeam) {
+      // TODO Auto-generated method stub
+     return  equipeRepository.findById(idTeam).get();
+    }
+
+   
     
     
 }

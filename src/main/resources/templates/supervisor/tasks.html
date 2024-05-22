@@ -103,44 +103,135 @@
                     
                   </div>
               </header>
+
+
       
-            <div class="grid grid-cols-3 gap-6">
-                <div th:each="task : ${listeTask}" class="relative max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mt-10">
-                    <!-- Status badge -->
-                    <div class="float-right text-xs text-red-600 uppercase">
-                        <span>Status:
-                            <span th:text="${task.status_task_temp}">
-                            </span>
-                        </span>
+              <div class="sm:px-6 w-full">
+                <div class="px-4 md:px-10 py-4 md:py-7">
+                    <div class="flex items-center justify-between">
+                        <input type="text" id="searchInput" placeholder="Search..." class="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500 mb-1">
+                        <div class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600   bg-gray-200  hover:bg-gray-300     cursor-pointer rounded">
+                            <p>Sort By:</p>
+                            <select aria-label="select" class="focus:text-indigo-600 focus:outline-none bg-transparent ml-1">
+                                <option class="text-sm text-indigo-800">Latest</option>
+                                <option class="text-sm text-indigo-800">Oldest</option>
+                                <option class="text-sm text-indigo-800">Latest</option>
+                            </select>
+                        </div>
                     </div>
-                    
-                    <br>
-                    <div class="float-right text-xs text-red-600 uppercase">
-                        <span>Gravity:
-                            <span id="gravity_card" th:text="${task.priority_temp}">
-                            </span>
-                        </span>
-                    </div>
-                    <h5 hidden  th:text="${task.id}" name="" id="idTaskForjs"></h5>
-                    <a href="#">
-                        <h5 id="title_card" class="mb-2 text-2xl font-bold tracking-tight text-gray-900" th:text="${task.title}"></h5>
-                    </a>
-                    <p id="descreption_card" th:text="${task.description}" class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
-                    <a   class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-zinc-800 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                       <button class="read-more-button">Read more</button> 
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
                 </div>
-</div>
+                <div class="bg-white  py-4  px-4 md:px-8 xl:px-10">
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full whitespace-nowrap">
+                            <tbody id="tableBody">
+                                <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100  rounded relative"  th:each="task:${listeTask}">
+                                    <h5 hidden  th:text="${task.id}" name="" id="idTaskForjs"></h5>
+                                    
+                                    <td>
+                                        <div class="ml-5">
+                                            <div class="flex items-center pl-5">
+                                                <p id="id_card" class="text-base font-medium leading-none text-gray-700  mr-2"  th:text="${task.id}">Marketing Keynote Presentation</p>
+                                                <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/tasks-svg1.svg" alt="clip">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <!-- Your existing code for other columns -->
+                                        <!-- Add a hidden element to store the description -->
+                                        <div id="description_card" style="display: none;" th:text="${task.description}">Task description goes here</div>
+                                    </td>
+                                    <td class="">
+                                        <div class="flex items-center pl-5">
+                                            <p id="title_card" class="text-base font-medium leading-none text-gray-700  mr-2"  th:text="${task.title}">Marketing Keynote Presentation</p>
+                                            <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/tasks-svg1.svg" alt="clip">
+                                        </div>
+                                    </td>
+                                    <td class="pl-24">
+                                        <div id="gravity_card" style="display: none;" th:text="${task.priority_temp}"></div>
+                                        <div class="flex items-center">
+                                           <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/tasks-svg2.svg" alt="tag">
+                                           <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded ">
+                                            <span th:text="${task.priority_temp}"></span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="pl-5">
+                                        <div class="flex items-center ml-3">
+                                           <button
+                                           class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-3.5 px-7 rounded-lg bg-white text-blue-gray-900 shadow-md shadow-blue-gray-500/10 hover:shadow-lg hover:shadow-blue-gray-500/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none flex items-center gap-3"
+                                           type="button">
+                                           <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/tasks-svg3.svg" alt="list">  
+                                           <span th:text="${task.status_task_temp}"></span>
+                                         </button>
+                                        </div>
+                                    </td>
+                                    <td class="pl-5">
+                    
+                                        <div class="flex items-center mr-4">
+                                            <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/tasks-svg4.svg" alt="chat">
+                                            <p class="text-sm leading-none text-gray-600   ml-2" th:text="${taskUtility.getCorOrSupForTask(task.id, 'operateur')}" >23</p>
+                                        </div>
+                                    </td>
+                                  
+                                    <td class="pl-5">
+                                        <button class="py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded" th:text="${taskUtility.getDeadline(task)}">Due today at 18:00</button>
+                                    </td>
+                                    <td class="pl-4">
+                                        
+                                        <a href="#_" class="mr-3 read-more-button relative px-5 py-2.5 overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group">
+                                            <span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
+                                            <span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
+                                            <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+                                            <span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+                                            <span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
+                                            <span class="relative transition-colors duration-300 delay-200 group-hover:text-white ease">View</span>
+                                            </a>
+                                    </td>
+                                    <td th:if="${task.status_task_temp == T(com.iben.gestiontaches.enums.statusCode).VALIDATIONIn_PROGRESS}">
+                                        <form th:action="@{/supervisor/taskValide}" method="POST">
+                                            <input type="hidden" name="id" th:value="${task.id}" />  
+                                            <button>  
+                                        <a href="#_" class="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 relative hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300">
+                                            <span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                                            <span class="relative">Valider</span>
+                                            </a>
+                                        </button> 
+                                        </form>
+                                    </td>
+                                </tr>
+                              
+                               
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <style>
+                .checkbox:checked + .check-icon {
+                    display: flex;
+                }
+            </style>
+                
+
+
+
+
+                
+
+
+
+
+
+
 
 
       
 
 <div id="popup-form" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
     <div class="bg-white p-4 rounded-lg">
-        <h2 class="text-xl font-bold mb-2">Form Title</h2>
+        <h2 class="text-xl font-bold mb-2 bg-center ml-60 text-blue-700">Task Detail</h2>
         <form th:action="@{/supervisor/addTask}" method="post">
             <div id="form">
                 <div class="flex flex-wrap items-start gap-2">
@@ -148,26 +239,26 @@
                         <div class="py-2 px-1">
                             <div class="bg-white rounded shadow mt-2 py-3">
                                 <div class="px-3">
-                                    <p class="text-lg font-semibold text-gray-800">Meta Details</p>
+                                    <p class="text-lg font-semibold text-blue-600">Task Inpformation:</p>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 mt-3">
                                         <div>
                                             <p class="text-base font-medium text-gray-800">Task Id:</p>
                                             <div class="relative top-1">
                                                 <div  class="relative w-full mt-1 border bg-slate-300 border-gray-300 rounded outline-none">
-                                                    <input    type="text" th:value="${taskId}" name="taskId" id="titleId" class="w-full px-3 py-2 text-red-700  font-extrabold">
+                                                    <input type="text" th:text="${taskId}" name="taskId" id="titleId" class="w-full px-3 py-2 text-red-700  font-extrabold">
                                                 </div>
                                             </div>
                                         </div>
                                         <div>
                                             <p class="text-base font-medium text-gray-800">Task Title:</p>
                                             <div class="relative top-1">
-                                                <div  class="relative w-full mt-1 border bg-slate-300 border-gray-300 rounded outline-none">
+                                                <div  class="relative w-full mt-1 border bg-slate-200 border-gray-300 rounded outline-none">
                                                     <input  disabled  type="text" name="title" id="titleInput" class="w-full px-3 py-2 text-red-700  font-extrabold">
                                                 </div>
                                             </div>
                                         </div>
                                         <div>
-                                            <p class="text-base font-medium text-gray-800">Duration:</p>
+                                            <p class="text-base font-medium text-gray-800">Duration: *</p>
                                             <div class="relative top-1">
                                                 <div class="relative w-full mt-1 border border-gray-300 rounded outline-none">
                                                     <input required th:value="${calender.duration}" name="duration" type="number" class="w-full px-3 py-2">
@@ -175,26 +266,26 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <p class="text-base font-medium text-gray-800">Start Date:</p>
+                                            <p class="text-base font-medium text-gray-800">Start Date: *</p>
                                             <input required th:value="${calender.startDate}" type="date" name="startDate" class="w-full px-3 py-2 mt-2 border border-gray-300 rounded outline-none">
                                         </div>
                                         <div>
                                             <p class="text-base font-medium text-gray-800">Gravity:</p>
-                                            <div class="relative w-full mt-1 border bg-slate-300 border-gray-300 rounded outline-none">
+                                            <div class="relative w-full mt-1 border bg-slate-200 border-gray-300 rounded outline-none">
                                                 <input disabled  type="text" name="title" id="gravityInput" class="w-full px-3 py-2 text-red-700  font-extrabold">
 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pt-2">
-                                    <p class="text-lg font-semibold text-gray-800">Task Description</p>
+                                <div class="pt-4">
+                                    <p class="text-lg font-semibold text-blue-600">Task Description</p>
                                     <div class="mt-3 border border-gray-300 rounded">
                                         <textarea disabled id="descInput" class="resize-none w-full h-32 px-3 py-2 text-base outline-none text-red-700 font-extrabold bg-slate-200"  required name="description"></textarea>
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="text-base font-medium text-gray-800">Employee:</p>
+                                    <p class="text-base font-medium text-gray-800">Employee: *</p>
                                     <div class="relative w-full mt-1 border border-gray-300 rounded outline-none">
                                         <select  name="opUserId" id="servicesDropdown" class="w-full px-3 py-2">
                                             <option th:each="emp : ${listeEmp}" th:value="${emp.id}" th:text="${emp.lastName}"></option>
@@ -204,14 +295,16 @@
                                 </div>
                                
                             </div>
+                            <P class="text-red-600 font-bold ">  * : required</P>
                             <div class="mt-2 text-red-600 " >
-                                <a th:href="@{/supervisor/conversation(id=${9})}">envoyer un message</a>
+                                <a th:href="@{/supervisor/conversation(id=${24})}">envoyer un message</a>
 
                             </div>
                             <div class="mt-2 flex justify-end">
                                 <button class="bg-blue-500 text-white font-bold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Submit</button>
                                 <button type="button" id="close-form" class="ml-2 bg-gray-300 text-gray-800 font-semibold px-4 py-2 rounded hover:bg-gray-400 focus:outline-none focus:bg-gray-400">Cancel</button>
                             </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -223,61 +316,54 @@
 
 
 <script>
- 
- document.addEventListener("DOMContentLoaded", function() {
-    const readMoreButtons = document.querySelectorAll('.read-more-button');
-
-    readMoreButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            document.getElementById('popup-form').classList.remove('hidden');
-
-            // Retrieve the title and set it for the corresponding card
-            const card = button.closest('.relative');
-            const titleElement = card.querySelector('#title_card'); // Update the selector to use id
-            const titleInput = document.getElementById('titleInput');
-
-            const descrElement = card.querySelector('#descreption_card'); 
-            const descreptionInput = document.getElementById('descInput');
-
-            const gravityElement = card.querySelector('#gravity_card');
-            const gravityInput = document.getElementById('gravityInput');
-
-           
-            const taskId = card.querySelector('#idTaskForjs').textContent.trim();
-            const taskIdInput = document.getElementById('titleId');
-            const url = 'http://localhost:8080/supervisor/tasks/' + taskId;
-            console.log(taskId);
-           // window.location.href = url;
-
-
-
-            titleInput.value = titleElement.textContent.trim();
-            descreptionInput.value = descrElement.textContent.trim();
-            gravityInput.value = gravityElement.textContent.trim();
-            taskIdInput.value = taskId;
-           
-
-        });
-    });
-
-    document.getElementById('close-form').addEventListener('click', function() {
-        document.getElementById('popup-form').classList.add('hidden');
-    });
-});
-  
-</script>
-<script>
-   
-
-
-
-
     document.addEventListener("DOMContentLoaded", function() {
         const readMoreButtons = document.querySelectorAll('.read-more-button');
 
         readMoreButtons.forEach(function(button) {
             button.addEventListener('click', function() {
+                const row = button.closest('tr');
                 document.getElementById('popup-form').classList.remove('hidden');
+
+                // Retrieve the title and set it for the corresponding card
+               
+                const titleElement = row.querySelector('#title_card'); 
+                const titleInput = document.getElementById('titleInput');
+
+                const idElement = row.querySelector('#id_card');
+                const idInput = document.getElementById('titleId');
+               
+                
+
+                const descrElement = row.querySelector('#description_card'); 
+                const descreptionInput = document.getElementById('descInput');
+
+                const gravityElement = row.querySelector('#gravity_card');
+                const gravityInput = document.getElementById('gravityInput');
+
+                //const taskId = card.querySelector('#idTaskForjs').textContent.trim();
+                //const taskIdInput = document.getElementById('titleId');
+                //const taskIdInput2 = document.getElementById('titleId2');
+
+               // taskIdInput.value = taskId;
+               //taskIdInput2.value = taskId;
+
+                //const url = 'http://localhost:8080/supervisor/tasks/' + taskId;
+                //console.log(taskId);
+              
+                // window.location.href = url;
+
+               // console.log("Task ID:", taskId);
+
+
+
+
+               console.log(titleInput);
+               console.log(titleElement);
+
+                titleInput.value = titleElement.textContent.trim();
+                idInput.value = idElement.textContent.trim();
+                descreptionInput.value = descrElement.textContent.trim();
+                gravityInput.value = gravityElement.textContent.trim();
             });
         });
 
@@ -285,6 +371,41 @@
             document.getElementById('popup-form').classList.add('hidden');
         });
     });
+
+
+
+ 
+
+</script>
+
+<script>
+    // Function to filter table rows based on search query
+    function filterTable() {
+        var input, filter, table, tbody, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableBody");
+        tr = table.getElementsByTagName("tr");
+        
+        // Loop through all table rows, hide those that don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break; // Break loop if one of the td matches
+                    } else {
+                        tr[i].style.display = "none"; // Hide row if no match
+                    }
+                }
+            }
+        }
+    }
+    
+    // Add event listener to input field to trigger filtering on input
+    document.getElementById("searchInput").addEventListener("input", filterTable);
 </script>
 
 

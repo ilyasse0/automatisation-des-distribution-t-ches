@@ -57,7 +57,7 @@ public class GestiontachesApplication {
 	private StatusRepository statusRepository;
 	private TaskRepository taskRepository;
 	 private TaskService taskService;
-	// private MessageService messageService;
+	 private MessageService messageService;
 	// private supervisorController supervisorController;
 	//private AdminServiceImplementation adminServiceImplementation;
 	//private AdminCtroller adminCtroller;
@@ -207,6 +207,9 @@ public class GestiontachesApplication {
 
 	//messageService.addMessageBySup("testing  the new message feature ", LocalDate.now(), 9L, "c5a1d3d4-476a-44c7-830f-084afe033a52");
 	// messageService.fetchMessages("06d40764-e31c-4407-aced-55ef26c47918");
+
+
+	//messageService.isSupervisor("c5a1d3d4-476a-44c7-830f-084afe033a52");
 
 		
 			

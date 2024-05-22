@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <style>
+        /* Agregar estilos para la vista de dispositivos pequeños */
+        @media (max-width: 768px) {
+            .flex-wrap {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .section-small {
+                width: 50%;
+            }
+        }
+    </style>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="flex flex-col h-screen bg-gray-100">
+
+    <!-- Barra de navegación superior -->
+    <div style="background-color: #143153;" class=" text-white shadow w-full p-2 flex items-center justify-between">
+        <div class="flex items-center">
+            <h1 class="font-bold text-xl ml-5 mr-6 text-white">Espace Admin</h1>
+            <div class="hidden md:flex items-center">
+                <div class="ml-48"></div>
+                <img  src="../images/LOGO_header.png"  alt="Logo" class="w-32 h-18 ml-96 ">
+            </div>
+            <div class="md:hidden flex items-center"> <!-- Show only on small devices -->
+                <button id="menuBtn">
+                    <i class="fas fa-bars text-gray-500 text-lg"></i>
+                </button>
+            </div>
+        </div>
+    
+        <!-- Notification and Profile Icons -->
+        <div class="space-x-5">
+            <button>
+                <i class="fas fa-bell text-gray-500 text-lg"></i>
+            </button>
+            <button>
+                <a href="/logout">
+                    <i class="fas fa-user text-gray-500 text-lg"></i>
+                </a>
+            </button>
+        </div>
+    </div>
+    <!-- Contenido principal -->
+    <div class="flex-1 flex">
+        <!-- Barra lateral de navegación (oculta en dispositivos pequeños) -->
+        <div style="background-color: #143153;" class="p-2  w-60 flex flex-col hidden md:flex" id="sideNav">
+            <nav>
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/home">
+                    <i class="fas fa-home mr-2"></i>HOME
+                </a>
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/teams">
+                    <i class="fas fa-file-alt mr-2"></i>ENHANCED-TEAM
+                </a>
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/employee">
+                    <i class="fas fa-users mr-2"></i>ENHANCED-EMP
+                </a>
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
+                    <i class="fas fa-store mr-2"></i>Comercios
+                </a>
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
+                    <i class="fas fa-exchange-alt mr-2"></i>Transacciones
+                </a>
+            </nav>
+
+            <!-- Ítem de Cerrar Sesión -->
+            <a class="block text-white py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white mt-auto" href="#">
+                <i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión
+            </a>
+
+            <!-- Señalador de ubicación -->
+            <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
+
+            <!-- Copyright al final de la navegación lateral -->
+            <p class="mb-1 px-5 py-3 text-left text-xs text-cyan-500">Copyright WCSLAT@2023</p>
+
+        </div>
+
+        <!-- Área de contenido principal -->
+            <!-- main area for the form -->
+<div class="flex-1 p-4">
+    <!-- Campo de búsqueda -->
+ 
+    <!-- Formulario para agregar un equipo -->
+    <div class="container emp-profile">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                        <div class="file btn btn-lg btn-primary">
+                            Change Photo
+                            <input type="file" name="file"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="profile-head">
+                                <h5>
+                                    Kshiti Ghelani
+                                </h5>
+                                <h6>
+                                    Web Developer and Designer
+                                </h6>
+                                <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button  type="button" class="btn btn-lg btn-primary"  >Edit Profile
+                        
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-work">
+                        <p>WORK LINK</p>
+                        <a href="">Website Link</a><br/>
+                        <a href="">Bootsnipp Profile</a><br/>
+                        <a href="">Bootply Profile</a>
+                        <p>SKILLS</p>
+                        <a href="">Web Designer</a><br/>
+                        <a href="">Web Developer</a><br/>
+                        <a href="">WordPress</a><br/>
+                        <a href="">WooCommerce</a><br/>
+                        <a href="">PHP, .Net</a><br/>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>User Id</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input required th:value="${userProfile.id}"  type="text" id="firstName" name="firstName"value="" class="text-blue-600 font-bold">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="firstName">Name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input required th:value="${userProfile.firstName}"  type="text" id="firstName" name="firstName"value="" class="text-blue-600 font-bold">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input required th:value="${userProfile.email}"  type="text" id="firstName" name="firstName"value="" class="text-blue-600 font-bold">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Phone</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input required th:value="${userProfile.phoneNumber}"  type="text" id="firstName" name="firstName"value="" class="text-blue-600 font-bold">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Role</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>Chef de projet</p>
+                                        </div>
+                                    </div>
+                                    <img src="../images/enhaced_pic.jpg" alt=""  class="w-40 h-24  mt-8 ml-44 ">
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Experience</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>Expert</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Hourly Rate</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>10$/hr</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Total Projects</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>230</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>English Level</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>Expert</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Availability</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>6 months</p>
+                                        </div>
+                                    </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Your Bio</label><br/>
+                                    <p>Your detail description</p>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>           
+    </div>
+</div>
+
+                
+                  
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

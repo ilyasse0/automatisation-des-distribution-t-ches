@@ -23,4 +23,9 @@ public interface AdminService {
             List<Service> services,
             List<Equipe> equipes);
 
+    
+        
+    public List<User> getEmployees(String role);
+
 }
+

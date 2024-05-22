@@ -35,6 +35,7 @@ public class MessageServiceImplementation implements MessageService {
                 .date_Creation(dateCreation)
                 .task(task)
                 .user(user)
+                .isSup(true)
                 .build();
         System.out.println("Message created");
         return messageRepository.save(msg);
@@ -52,10 +53,13 @@ public class MessageServiceImplementation implements MessageService {
         List<Message> messages = messageRepository.findByTaskId(taskId);
         List<Message> messageSup = new ArrayList<>();
         for (Message message : messages) {
-          
-            if (message.getUser().equals(user_Id)) {
+
+           // List<String> idUserList = messageRepository.findUserIdsByTask(taskId);
+            System.out.println("----------------------------");
+            //System.out.println(idUserList);
+            if (message.getUser().getId().equals(user_Id)) {
                 messageSup.add(message);
-                System.out.println("the secinde test "+messageSup);
+                // System.out.println("the secinde test "+messageSup);
             }
         }
         return messageSup;
@@ -68,11 +72,18 @@ public class MessageServiceImplementation implements MessageService {
         List<Message> messages = messageRepository.findByTaskId(taskId);
         List<Message> messageOp = new ArrayList<>();
         for (Message message : messages) {
-            if (!message.getUser().equals(user_Id)) {
+            if (!message.getUser().getId().equals(user_Id)) {
                 messageOp.add(message);
             }
         }
         return messageOp;
+    }
+
+    @Override
+    public boolean isSupervisor(String userId) {
+        User user = userRepository.findUserByid(userId);
+        System.out.println(user.getRoles());
+        return user.getRoles().stream().anyMatch(role -> role.getName().equals("SUP"));
     }
 
 }

@@ -11,12 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.iben.gestiontaches.entities.Calendar;
 import com.iben.gestiontaches.entities.Gravity;
+import com.iben.gestiontaches.entities.Message;
 import com.iben.gestiontaches.entities.Status;
 import com.iben.gestiontaches.entities.Task;
 import com.iben.gestiontaches.entities.User;
 import com.iben.gestiontaches.entities.UserTaskAssignment;
 import com.iben.gestiontaches.enums.statusCode;
 import com.iben.gestiontaches.repository.CalendarRepository;
+import com.iben.gestiontaches.repository.MessageRepository;
 import com.iben.gestiontaches.repository.StatusRepository;
 import com.iben.gestiontaches.repository.TaskRepository;
 import com.iben.gestiontaches.repository.UserRepository;
@@ -32,6 +34,8 @@ public class TaskServiceImplementation implements TaskService {
     private CalendarRepository calendarRepository;
     private UserTaskAssignmentRepository assignmentRepository;
     private StatusRepository statusRepository;
+    private MessageRepository messageRepository;
+    
 
     @Override
     @Transactional
@@ -163,6 +167,84 @@ public class TaskServiceImplementation implements TaskService {
     public List<Task> getTasks(){
         List<Task> listeTasks = taskRepository.findAll();
         return listeTasks;
+    }
+
+    @Override
+    public void removeTask(Long idTask) {
+        // TODO Auto-generated method stub
+        assignmentRepository.deleteByTaskId(idTask);
+        taskRepository.deleteById(idTask);
+        System.out.println("task removed successfully!");
+    }
+
+    @Override
+    public Task findbyId(Long idTask) {
+        // TODO Auto-generated method stub
+        return taskRepository.findById(idTask).get();
+    }
+
+    @Override
+    public Task upadteTaskStatus(Long idTask) {
+        Task task = findbyId(idTask);
+        if(task.getStatus_task_temp()==statusCode.TODO){
+            task.setStatus_task_temp(statusCode.VALIDATIONIn_PROGRESS);
+        }else{
+           throw new  RuntimeException("Invalid Operation! task already done");
+                }
+          
+            return task;
+       
+    }
+
+    @Override
+    public Task ValideTaskStatus(Long idTask) {
+        // TODO Auto-generated method stub
+        Task task = findbyId(idTask);
+        if(task.getStatus_task_temp()==statusCode.VALIDATIONIn_PROGRESS){
+            task.setStatus_task_temp(statusCode.DONE);
+        }else{
+           throw new  RuntimeException("Invalid Operation! task already done");
+                }
+          
+            return task;
+           }
+
+    @Override
+    public void removeAllTasksByCoordinator(String coordinatorId) {
+        // TODO Auto-generated method stub
+        List<Task> tasks = taskRepository.findTasksByCoordinatorId(coordinatorId);
+        for (Task task : tasks) {
+            //this part os for deleting the messages
+            List<Message> messages = task.getMessages();
+            if (messages != null) {
+                for (Message message : messages) {
+                    messageRepository.delete(message);
+                    System.out.println("message has been deleted");
+                }
+            }
+            //this part os for deleting the userAssignenment
+            //this is darori to ba able to drop safly the tasks!!!!
+
+            List<UserTaskAssignment> userTaskAssignments = task.getUserAssignments();
+            if (userTaskAssignments != null) {
+                for (UserTaskAssignment assignment : userTaskAssignments) {
+                    assignmentRepository.delete(assignment);
+                    System.out.println("UserTaskAssignment has been deleted");
+                }
+            }
+
+
+            taskRepository.delete(task);
+            System.out.println("tasks has been initialized!");
+        }
+    }
+
+    @Override
+    public LocalDate calculateDeadline(Task task) {
+        if (task == null || task.getCalendar() == null || task.getCalendar().getStartDate() == null) {
+            return null; // Return null if task or calendar or startDate is null
+        }
+        return task.getCalendar().getStartDate().plusDays(task.getCalendar().getDuration());
     }
 
 

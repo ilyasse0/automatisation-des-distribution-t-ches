@@ -29,27 +29,29 @@
 <div class="flex flex-col h-screen bg-gray-100">
 
     <!-- Barra de navegación superior -->
-    <div class="bg-white text-white shadow w-full p-2 flex items-center justify-between">
+    <div style="background-color: #143153;" class=" text-white shadow w-full p-2 flex items-center justify-between">
         <div class="flex items-center">
-            <div class="hidden md:flex items-center"> <!-- Se oculta en dispositivos pequeños -->
-                <img src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png" alt="Logo" class="w-28 h-18 mr-2">
-                <h2 class="font-bold text-xl">Nombre de la Aplicación</h2>
+            <h1 class="font-bold text-xl ml-5 mr-6 text-white">Espace Admin</h1>
+            <div class="hidden md:flex items-center">
+                <div class="ml-48"></div>
+                <img  src="../images/LOGO_header.png"  alt="Logo" class="w-32 h-18 ml-96 ">
             </div>
-            <div class="md:hidden flex items-center"> <!-- Se muestra solo en dispositivos pequeños -->
+            <div class="md:hidden flex items-center"> <!-- Show only on small devices -->
                 <button id="menuBtn">
-                    <i class="fas fa-bars text-gray-500 text-lg"></i> <!-- Ícono de menú -->
+                    <i class="fas fa-bars text-gray-500 text-lg"></i>
                 </button>
             </div>
         </div>
-
-        <!-- Ícono de Notificación y Perfil -->
+    
+        <!-- Notification and Profile Icons -->
         <div class="space-x-5">
             <button>
                 <i class="fas fa-bell text-gray-500 text-lg"></i>
             </button>
-            <!-- Botón de Perfil -->
             <button>
-                <i class="fas fa-user text-gray-500 text-lg"></i>
+                <a href="/logout">
+                    <i class="fas fa-user text-gray-500 text-lg"></i>
+                </a>
             </button>
         </div>
     </div>
@@ -57,27 +59,27 @@
     <!-- Contenido principal -->
     <div class="flex-1 flex">
         <!-- Barra lateral de navegación (oculta en dispositivos pequeños) -->
-        <div class="p-2 bg-white w-60 flex flex-col hidden md:flex" id="sideNav">
+        <div style="background-color: #143153;" class="p-2  w-60 flex flex-col hidden md:flex" id="sideNav">
             <nav>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/home">
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/home">
                     <i class="fas fa-home mr-2"></i>HOME
                 </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/teams">
-                    <i class="fas fa-file-alt mr-2"></i>TEAM
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/teams">
+                    <i class="fas fa-file-alt mr-2"></i>ENHANCED-TEAM
                 </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
-                    <i class="fas fa-users mr-2"></i>Usuarios
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/employee">
+                    <i class="fas fa-users mr-2"></i>ENHANCED-EMP
                 </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
-                    <i class="fas fa-store mr-2"></i>Comercios
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/profile">
+                    <i class="fas fa-store mr-2"></i>PROFILE
                 </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
+                <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
                     <i class="fas fa-exchange-alt mr-2"></i>Transacciones
                 </a>
             </nav>
 
             <!-- Ítem de Cerrar Sesión -->
-            <a class="block text-gray-500 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white mt-auto" href="#">
+            <a class="block text-white py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white mt-auto" href="#">
                 <i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión
             </a>
 
@@ -92,20 +94,32 @@
         <!-- Área de contenido principal -->
         <div class="flex-1 p-4">
             <!-- Campo de búsqueda -->
-            <div class="relative max-w-md w-full">
-                <div class="absolute top-1 left-2 inline-flex items-center p-2">
-                    <i class="fas fa-search text-gray-400"></i>
-                </div>
-                <input class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" type="search" placeholder="Buscar...">
-            </div>
+           
 
             <!-- Contenedor de las 4 secciones (disminuido para dispositivos pequeños) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 p-2">
                 <!-- Sección 1 - Gráfica de Usuarios (disminuida para dispositivos -->
-            
+
+                <div class="bg-white p-4 rounded-md">
+                    <h2 class="text-black text-lg font-semibold pb-1">ACCOUNT STATUS </h2>
+                    <div class="my-1"></div> <!-- Espacio de separación -->
+                    <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
+                    <div class="chart-container ml-6" style="position: relative; height:200px; width:400px"> <!-- Increased size -->
+                      <!-- El canvas para la gráfica -->
+                      <canvas id="AccountChart"></canvas>
+                    </div>
+                  </div>
                 <!-- Sección 1 - Gráfica de Usuarios -->
                    
-
+                <div class="bg-white p-4 rounded-md">
+                    <h2 class="text-black text-lg font-semibold pb-1">ACCOUNT STATUS </h2>
+                    <div class="my-1"></div> <!-- Espacio de separación -->
+                    <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
+                    <div class="chart-container ml-6" style="position: relative; height:200px; width:400px"> <!-- Increased size -->
+                      <!-- El canvas para la gráfica -->
+                      <canvas id="Accountcor"></canvas>
+                    </div>
+                  </div>
                     <!-- Sección 2 - Gráfica de Comercios -->
                    
 
@@ -114,6 +128,12 @@
                 <h2 class="text-gray-500 text-lg font-semibold pb-4">Teams Enhaced  Technology</h2>
                 <div class="my-1"></div> <!-- Espacio de separación -->
                 <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
+                <div class="relative max-w-md w-full">
+                    <div class="absolute top-1 left-2 inline-flex items-center p-2">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <input id="searchInput" class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" type="search" placeholder="Search here ...">
+                </div>
                 <table class="w-full table-auto text-sm">
                     <thead>
                         <tr class="text-sm leading-normal">
@@ -122,13 +142,15 @@
                             <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tableBody">
                         <tr class="odd:bg-white  even:bg-gray-50 dark:border-gray-700" th:each="equipe:${equipe}">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${equipe.nom}"></td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${equipe.status}"></td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap " >
                                 <div class="inline-block text-yellow-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <a onclick="javascript:return confirm('are u sure ?')" th:href="@{/chef_projet/editEquipe(id=${equipe.id})}">
+
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                   </svg>
                                 </div>
@@ -148,10 +170,20 @@
                     </table>
                     <!-- Botón "Ver más" para la tabla de Autorizaciones Pendientes -->
                     <div class="text-right mt-4">
-                        <button id="addTeamButton" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
-                          <a  th:href="@{/chef_projet/FormEquipe}">Add Team</a>
+                        <button id="addTeamButton" >
+                            <a th:href="@{/chef_projet/FormEquipe}"  class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+                                <span style="background-color: #143153;" class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"></span>
+                                <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
+                                <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </span>
+                                <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
+                                <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </span>
+                                <span class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">Add Team</span>
+                                </a>
                         </button>
                     </div>
+                   
                 </div>
 
                 <!-- Sección 4 - Tabla de Transacciones (disminuida para dispositivos pequeños) -->
@@ -159,6 +191,12 @@
     <h2 class="text-gray-500 text-lg font-semibold pb-4">Coordinator List</h2>
     <div class="my-1"></div> <!-- Espacio de separación -->
     <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
+    <div class="relative max-w-md w-full">
+        <div class="absolute top-1 left-2 inline-flex items-center p-2">
+            <i class="fas fa-search text-gray-400"></i>
+        </div>
+        <input id="searchInput_doneTask" class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" type="search" placeholder="Search here ...">
+    </div>
     <table class="w-full table-auto text-sm">
         <thead>
             <tr class="text-sm leading-normal">
@@ -169,9 +207,8 @@
 
             </tr>
         </thead>
-        <tbody>
            
-            <tbody>
+            <tbody id="tableBody_doneTask">
                 <tr class="odd:bg-white  even:bg-gray-50 dark:border-gray-700" th:each="C:${Cordinateur}">
                     <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.firstName}"></td>
                     <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${C.email}"></td>
@@ -179,6 +216,8 @@
                     <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap " >
                         <div class="inline-block text-yellow-600">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <a  th:href="@{/chef_projet/EditCord(id=${C.id})}">
+
                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                           </svg>
                         </div>
@@ -195,12 +234,20 @@
 
                 </tr>
             </tbody>
-        </tbody>
     </table>
     <!-- Botón "Ver más" para la tabla de Transacciones -->
     <div class="text-right mt-4">
-        <button id="addTeamButton" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
-          <a  th:href="@{/chef_projet/FormCord}">Add Team</a>
+        <button id="addTeamButton" >
+            <a th:href="@{/chef_projet/FormCord}"  class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+                <span style="background-color: #143153;" class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"></span>
+                <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
+                <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </span>
+                <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
+                <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </span>
+                <span class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">Add Coordinator</span>
+                </a>
         </button>
     </div>
 </div>
@@ -211,6 +258,121 @@
     </div>
 </div>
 
+
+<script>
+    // Dummy data
+    var activeAccount = 70;
+    var nonActiveAccount = 30;
+
+    // Creating pie chart
+    var accountPieChart = new Chart(document.getElementById('AccountChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Active Account', 'Non-Active Account'],
+        datasets: [{
+          label: 'Account Status',
+          data: [activeAccount, nonActiveAccount],
+          backgroundColor: ['#FEC500', '#B10300'],
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          position: 'bottom'
+        }
+      }
+    });
+  </script>
+  
+<script>
+    // Dummy data
+    var activeAccount = 70;
+    var nonActiveAccount = 30;
+
+    // Creating pie chart
+    var accountPieChart = new Chart(document.getElementById('Accountcor'), {
+      type: 'pie',
+      data: {
+        labels: ['Active Account', 'Non-Active Account'],
+        datasets: [{
+          label: 'Account Status',
+          data: [activeAccount, nonActiveAccount],
+          backgroundColor: ['#FEC500', '#B10300'],
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          position: 'bottom'
+        }
+      }
+    });
+  </script>
+
+
+
+<script>
+    // Function to filter table rows based on search query
+    function filterTable() {
+        var input, filter, table, tbody, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableBody");
+        tr = table.getElementsByTagName("tr");
+        
+        // Loop through all table rows, hide those that don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break; // Break loop if one of the td matches
+                    } else {
+                        tr[i].style.display = "none"; // Hide row if no match
+                    }
+                }
+            }
+        }
+    }
+    
+    // Add event listener to input field to trigger filtering on input
+    document.getElementById("searchInput").addEventListener("input", filterTable);
+</script>
+
+
+<script>
+    // Function to filter table rows based on search query
+    function filterTable() {
+        var input, filter, table, tbody, tr, td, i, txtValue;
+        input = document.getElementById("searchInput_doneTask");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableBody_doneTask");
+        tr = table.getElementsByTagName("tr");
+        
+        // Loop through all table rows, hide those that don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break; // Break loop if one of the td matches
+                    } else {
+                        tr[i].style.display = "none"; // Hide row if no match
+                    }
+                }
+            }
+        }
+    }
+    
+    // Add event listener to input field to trigger filtering on input
+    document.getElementById("searchInput_doneTask").addEventListener("input", filterTable);
+</script>
 
 
 

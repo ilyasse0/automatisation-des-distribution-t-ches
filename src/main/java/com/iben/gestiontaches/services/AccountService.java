@@ -48,4 +48,13 @@ public interface AccountService {
    List<Equipe> equipes);
 
 
+   void deleteUser(String Id);
+
+
+
+   public boolean verifyPassword(User user, String password);
+   public void updatePassword(User user, String newPassword);
+
+
+
 }

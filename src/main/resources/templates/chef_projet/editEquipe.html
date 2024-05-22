@@ -101,12 +101,14 @@
         <h2 class="text-gray-500 text-lg font-semibold pb-4">Adding New Team</h2>
 
         <!-- Formulario de Equipo -->
-        <form id="addEquipeForm" th:action="@{/addEquipe}" method="post" >
-            <label for="equipeTitle" class="block mb-2">Title:</label>
-            <input required th:value="${NewEquipe.nom}" type="text" id="equipeTitle" name="nom" class="border-black bg-slate-200 p-2 rounded-md mb-4 w-full">
+        <form id="addEquipeForm" th:action="@{/chef_projet/updateEquipe}" method="post" >
+            <input type="hidden" name="id" th:value="${equipe.id}" />
+
+            <label class="block mb-2">Title:</label>
+            <textarea th:text="${equipe.nom}"  name="nom" class="border-black bg-slate-200 p-1 rounded-md mb-4 w-full"></textarea>
 
             <label for="equipeDescription" class="block mb-2">Description:</label>
-            <textarea th:value="${NewEquipe.description}" id="equipeDescription" name="description" class="border-black bg-slate-200 p-6 rounded-md mb-4 w-full"></textarea>
+            <textarea th:text="${equipe.description}" id="equipeDescription" name="description" class="border-black bg-slate-200 p-6 rounded-md mb-4 w-full"></textarea>
 
             <label for="equipeStatus" class="block mb-2">Status:</label>
             <select id="equipeStatus" name="status" class="border-black bg-slate-200 p-2 rounded-md mb-4 w-full">
@@ -115,7 +117,7 @@
             </select>
 
             <div class="text-right">
-                <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">Add</button>
+                <button type="submit" style="background-color: #143153;" class=" hover:bg-cyan-600 text-white font-bold py-2 px-8 rounded">Update</button>
             </div>
         </form>
     </div>

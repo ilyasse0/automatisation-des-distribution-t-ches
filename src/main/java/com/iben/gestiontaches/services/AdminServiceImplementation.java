@@ -42,39 +42,45 @@ public class AdminServiceImplementation implements AdminService {
     public List<Role> getAllRoles() {
         List<Role> listeRoles = roleRepository.findAll();
         List<Role> filteredRoles = listeRoles.stream()
-            .filter(role -> !"CHEF_PROJET".equals(role.getName()))
-            .collect(Collectors.toList());
-            return filteredRoles;
-      
+                .filter(role -> !"CHEF_PROJET".equals(role.getName()))
+                .collect(Collectors.toList());
+        return filteredRoles;
+
     }
 
     @Override
     public Equipe addEquipe(String nomEquipe, String description, deactivatedFlag status) {
         // TODO Auto-generated method stub
         Equipe equipe = Equipe.builder()
-        .nom(nomEquipe)
-        .description(description)
-        .status(status)
-        .build();
+                .nom(nomEquipe)
+                .description(description)
+                .status(status)
+                .build();
         return equipeRepository.save(equipe);
-        
-
     }
-    public List<Equipe> getAllEquipes(){
+    public Equipe saveEquipe(Equipe equipe){
+       
+        return equipeRepository.save(equipe);
+    }
+    public User saveCord(User user){
+        return userRepository.save(user);
+    }
+
+    public List<Equipe> getAllEquipes() {
         return equipeRepository.findAll();
     }
 
     @Override
     public User addCordinateur(String firstName, String lastName, String sex, String phoneNumber, String email,
-            String login, String password, String confirmPassword,  List<Service> services , List<Equipe> equipes) {
+            String login, String password, String confirmPassword, List<Service> services, List<Equipe> equipes) {
         // TODO Auto-generated method stub
-          // Check if user with provided login already exists
-          User existingUser = userRepository.findUserBylogin(login);
-          if (existingUser != null) {
-              throw new RuntimeException("User with login '" + login + "' already exists!");
-          }
+        // Check if user with provided login already exists
+        User existingUser = userRepository.findUserBylogin(login);
+        if (existingUser != null) {
+            throw new RuntimeException("User with login '" + login + "' already exists!");
+        }
 
-           // Check if password matches the confirm password
+        // Check if password matches the confirm password
         if (!password.equals(confirmPassword)) {
             throw new RuntimeException("Passwords do not match!");
         }
@@ -82,35 +88,34 @@ public class AdminServiceImplementation implements AdminService {
         role.add(roleRepository.findRoleByname("COR"));
 
         User newUser = User.builder()
-        .id(UUID.randomUUID().toString())
-        .firstName(firstName)
-        .lastName(lastName)
-        .sex(sex)
-        .phoneNumber(phoneNumber)
-        .email(email)
-        .login(login)
-        .password(passwordEncoder.encode(password))
-        .status(deactivatedFlag.ACTIVE)
-        .roles(role)
-        .services(services)
-        .equipes(equipes)
-        .build();
+                .id(UUID.randomUUID().toString())
+                .firstName(firstName)
+                .lastName(lastName)
+                .sex(sex)
+                .phoneNumber(phoneNumber)
+                .email(email)
+                .login(login)
+                .password(passwordEncoder.encode(password))
+                .status(deactivatedFlag.ACTIVE)
+                .roles(role)
+                .services(services)
+                .equipes(equipes)
+                .build();
 
         return userRepository.save(newUser);
     }
 
-    public List<User> getCordinateur(){
-        List<User> listeCord =  userRepository.findByRolesName("COR");
-
-        System.out.println("((-----------------------------------))");
-        //System.out.println(listeCord);
+    public List<User> getCordinateur() {
+        List<User> listeCord = userRepository.findByRolesName("COR");
         return listeCord;
 
     }
 
-
-    
-
-    
+    @Override
+    public List<User> getEmployees(String role) {
+        // TODO Auto-generated method stub
+        List<User> liste = userRepository.findByRolesName(role);
+        return liste;
+    }
 
 }

@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="../CSS/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </head>
 <body>
    
@@ -20,7 +27,7 @@
     <div class="flex flex-no-wrap">
         <!-- Sidebar starts -->
         <!-- Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] -->
-        <div style="min-height: 716px" class="w-64 absolute sm:relative bg-blue-900 shadow md:h-full flex-col justify-between hidden sm:flex">
+        <div style="min-height: 916px" class="w-64 absolute sm:relative bg-blue-900 shadow md:h-full flex-col justify-between hidden sm:flex">
             <div class="px-8">
                 <div class="bg-slate-300 rounded-full p-12  mr-5 flex items-center justify-center mt-8" style="width: 170px; height: 170px;">
                   <img class="w-full h-full" style="width: 120px; height: 100px;" src="/images/directeur.png" alt="Logo">
@@ -104,48 +111,426 @@
                   </a>
                     <nav class="contents font-semibold text-base text-black lg:text-lg">
                     </nav>
-                    <a  th:href="@{/logout}">
-                        <button class="border border-black text-black bg-white  rounded-2xl font-bold px-7 mr-3 py-2 hover:bg-gray-200">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="border border-black text-black bg-white  rounded-2xl font-bold px-7 mr-3 py-2 hover:bg-gray-200">
                             Log Out
                         </button>
-                    </a>
+                    </form>
                     
                   </div>
               </header>
       
-            <div class="grid grid-cols-3 gap-6">
-                <div th:each="task : ${listeTask}" class="relative max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mt-10">
-                    <!-- Status badge -->
-                    <div class="float-right text-xs text-red-600 uppercase">
-                        <span>Status:
-                            <span th:text="${task.status_task_temp}">
-                            </span>
-                        </span>
+           
+              <div class="mx-auto container bg-white dark:bg-gray-800 dark:bg-gray-800 shadow rounded mt-4">
+                <div class="flex flex-col lg:flex-row p-4 lg:p-8 justify-between items-start lg:items-stretch w-full">
+                    <div class="w-full lg:w-1/3 flex flex-col lg:flex-row items-start lg:items-center">
+                        <div class="flex items-center">
+                            <input type="text" id="searchInput" placeholder="Search..." class="p-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500">
+
+                        </div>
                     </div>
-                    <br>
-                    <div class="float-right text-xs text-red-600 uppercase">
-                        <span>Gravity:
-                            <span th:text="${task.priority_temp}">
-                            </span>
-                        </span>
+                    <div class="w-full lg:w-2/3 flex flex-col lg:flex-row items-start lg:items-center justify-end">
+                        <div class="flex items-center lg:border-l lg:border-r border-gray-300 py-3 lg:py-0 lg:px-6">
+                            <p class="text-base text-gray-600 dark:text-gray-400" id="page-view">Viewing 1 - 20 of 60</p>
+                            <button class="text-gray-600 dark:text-gray-400 ml-2 border-transparent border cursor-pointer rounded focus:outline-none focus:ring-2 focus:ring-gray-500 " onclick="pageView(false)" aria-label="Goto previous page " role="button">
+                                <img class="dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/compact_table_with_actions_and_select-svg6.svg" alt="">
+                                <img class="dark:block hidden" src="../svgs/svg6dark.svg" alt="">
+                            </button>
+                            <button class="text-gray-600 dark:text-gray-400 border-transparent border rounded focus:outline-none focus:ring-2 focus:ring-gray-500 cursor-pointer" aria-label="goto next page" role="button" onclick="pageView(true)">
+                                <img class="transform rotate-180 dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/compact_table_with_actions_and_select-svg6.svg" alt="">
+                                <img class="transform rotate-180 dark:block hidden" src="../svgs/svg6dark.svg" alt="">
+                            </button>
+                        </div>
+                        <div class="flex items-center lg:border-r border-gray-300 pb-3 lg:pb-0 lg:px-6">
+                            <div class="relative w-32 z-10">
+                                <div class="pointer-events-none text-gray-600 dark:text-gray-400 absolute inset-0 m-auto mr-2 xl:mr-4 z-0 w-5 h-5">
+                                    <img class="transform -rotate-90 dark:hidden" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/compact_table_with_actions_and_select-svg6.svg" alt="">
+                                <img class="transform -rotate-90 dark:block hidden" src="../svgs/svg6dark.svg" alt="">
+                                </div>
+
+                                <select aria-label="Selected tab" class="focus:outline-none border border-transparent focus:border-gray-800 focus:shadow-outline-gray text-base form-select block w-full py-2 px-2 xl:px-3 rounded text-gray-600 dark:text-gray-400 appearance-none bg-transparent">
+                                    <option>List View</option>
+                                    <option>Grid View</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="lg:ml-6 flex items-center">                       
+                            <a th:href="@{/coordinator/initializeTasks}">
+                                <button onclick="downloadPDF(); formemp();" class="bg-gray-200 transition duration-150 ease-in-out focus:outline-none border border-transparent focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 hover:bg-gray-300 rounded text-indigo-700 px-5 h-8 flex items-center text-sm">Initialize</button>
+                            </a>
+                        </div>
+
+                        <div class="lg:ml-6 flex items-center">
+                            
+                            <button onclick="downloadPDF()"  class="bg-gray-200 transition duration-150 ease-in-out focus:outline-none border border-transparent focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 hover:bg-gray-300 rounded text-indigo-700 px-5 h-8 flex items-center text-sm">Download </button>
+                            <button role="button" aria-label="add table" class="text-white ml-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 border border-transparent bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 w-8 h-8 rounded flex items-center justify-center">
+                               <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/compact_table_with_actions_and_select-svg7.svg" alt="plus">
+                            </button>
+                        </div>
                     </div>
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900" th:text="${task.title}"></h5>
-                    </a>
-                    <p th:text="${task.description}" class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
-                    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Read more
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
                 </div>
-</div>
+                <div class="w-full overflow-x-scroll xl:overflow-x-hidden">
+                    <table class="min-w-full bg-slate-100">
+                        <thead>
+                            <tr class="w-full h-16 border-gray-500 border-b-2 py-8 ">
+                                
+                               
+                                <th role="columnheader" class="text-gray-600 font-bold pr-6 text-center text-sm tracking-normal leading-4">Title</th>
+                                <th role="columnheader" class="text-gray-600 font-bold pr-6 text-center text-sm tracking-normal leading-4">Start Date</th>
+
+                                <th role="columnheader" class="text-gray-600 font-bold pr-6 text-center text-sm tracking-normal leading-4">Dead line</th>
+                                <th role="columnheader" class="text-gray-600 font-bold pr-6 text-center text-sm tracking-normal leading-4"> Supervised</th>
+                                <th role="columnheader" class="text-gray-600 font-bold pr-6 text-center text-sm tracking-normal leading-4"> Operateur</th>
+
+
+
+                                <th role="columnheader" class="text-gray-600  font-bold pr-6 text-center text-sm tracking-normal leading-4">status</th>
+                                <th role="columnheader" class="text-gray-600  font-bold pr-6 text-center text-sm tracking-normal leading-4"> priority</th>
+
+                          
+                                
+                                <td role="columnheader" class="text-gray-600  font-bold pr-0 text-center text-sm tracking-normal leading-4">More</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr class="odd:bg-gray-200  even:bg-gray-100 border-black text-sm" th:each="u:${listeTask}">
+                                
+                                
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
+                                    <span th:if="${u.title != null}" th:text="${u.title}"></span>
+                                    <span th:if="${u.title == null}"></span>
+                                </td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap">
+                                    <span th:if="${u.calendar != null && u.calendar.startDate != null}" th:text="${u.calendar.startDate}"></span>
+                                    <span th:if="${u.calendar == null || u.calendar.startDate == null}"></span>
+                                </td>
+
+                                
+                                 <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${taskUtility.getDeadline(u)}">deadLine</td>
+                                    
+                                
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${taskUtility.getCorOrSupForTask(u.id, 'supervisor')}" >TestSup</td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" th:text="${taskUtility.getCorOrSupForTask(u.id, 'operateur')}" >TestSup</td>
+
+
+
+                                <td scope="row" class="font-medium text-gray-500 whitespace-nowrap ">
+                                    
+                                        <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded">
+                                            <span th:text="${u.status_task_temp}"></span>
+                                        </button>
+                                    
+                                </td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap ">
+                                    
+                                    <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded ">
+                                        <span th:text="${u.priority_temp}"></span>
+                                        </button>
+                                
+                            </td>
+                            
+
+                            <td class="pr-8 relative ">
+                                <td scope="row" class="px-0 py-4 font-medium text-gray-500 whitespace-nowrap " >
+                                    <div class="inline-block text-yellow-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <a  th:href="@{/coordinateur/editSupervispr(id=${u.id})}">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="inline-block ml-4 text-red-600">
+                                    <button >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <a  th:href="@{/coordinator/deleteTask(id=${u.id})}">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+                                    </svg>
+                                </a>
+                            </button>
+                                </div>
+                            </td>
+                            </td>
+
+
+                               
+
+                               
+                                <!-- TODO : add if account is active green btn -->
+                            
+                                
+                            
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+          
+          
+        
 
 
       
 
 
+<!-- Popup Form -->
+
+<div id="popup-form" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center w-full h-full items-center hidden">
+    <div class="bg-white p-4 rounded-lg">
+        <h2 class="text-xl font-bold mb-2 bg-center">Task Detail:</h2>
+        <form  method="post">
+            <div id="form">
+                <div class="flex flex-wrap items-start gap-2">
+                    <div class="w-full">
+                        <div class="py-2 px-1">
+                            <div class="bg-white rounded shadow mt-2 py-3">
+                                <div class="px-3">
+                                    <p class="text-lg font-semibold text-gray-800">Meta Details</p>
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 mt-3">
+                                        <div>
+                                            <p class="text-base font-medium text-gray-800">Task Id:</p>
+                                            <div class="relative top-1">
+                                                <div  class="relative w-full mt-1 border bg-slate-300 border-gray-300 rounded outline-none">
+                                                    <input    name="taskId" id="titleId" class="w-full px-3 py-2 text-red-700  font-extrabold">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="text-base font-medium text-gray-800">Task Title:</p>
+                                            <div class="relative top-1">
+                                                <div  class="relative w-full mt-1 border bg-slate-300 border-gray-300 rounded outline-none">
+                                                    <input  disabled  type="text" name="title" id="titleInput" class="w-full px-3 py-2 text-red-700  font-extrabold">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="text-base font-medium text-gray-800">Duration:</p>
+                                            <div class="relative top-1">
+                                                <div class="relative w-full mt-1 border border-gray-300 rounded outline-none">
+                                                    <input name="duration" type="number" class="w-full px-3 py-2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="text-base font-medium text-gray-800">Start Date:</p>
+                                            <input  type="date" name="startDate" class="w-full px-3 py-2 mt-2 border border-gray-300 rounded outline-none">
+                                        </div>
+                                        <div>
+                                            <p class="text-base font-medium text-gray-800">Gravity:</p>
+                                            <div class="relative w-full mt-1 border bg-slate-300 border-gray-300 rounded outline-none">
+                                                <input disabled  type="text" name="title" id="gravityInput" class="w-full px-3 py-2 text-red-700  font-extrabold">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-2">
+                                    <p class="text-lg font-semibold text-gray-800">Task Description</p>
+                                    <div class="mt-3 border border-gray-300 rounded">
+                                        <textarea disabled id="descInput" class="resize-none w-full h-32 px-3 py-2 text-base outline-none text-red-700 font-extrabold bg-slate-200"  required name="description"></textarea>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-base font-medium text-gray-800">Employee:</p>
+                                    <div class="relative w-full mt-1 border border-gray-300 rounded outline-none">
+                                        <select  name="opUserId" id="servicesDropdown" class="w-full px-3 py-2">
+                                            
+                                            <!-- Add more options as needed -->
+                                        </select>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="mt-2 text-red-600 " >
+                                <a th:href="@{/supervisor/conversation(id=${9})}">envoyer un message</a>
+
+                            </div>
+                            <div class="mt-2 flex justify-end">
+                                <button class="bg-blue-500 text-white font-bold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Update</button>
+                                <button type="button" id="close-form" class="ml-2 bg-gray-300 text-gray-800 font-semibold px-4 py-2 rounded hover:bg-gray-400 focus:outline-none focus:bg-gray-400">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function dropdownFunction(element) {
+    // Find the nearest dropdown-content element
+    const dropdownContent = element.nextElementSibling;
+    
+    // Toggle the hidden class
+    dropdownContent.classList.toggle("hidden");
+}
+</script>
+
+
+<script>
+ 
+    document.addEventListener("DOMContentLoaded", function() {
+       const readMoreButtons = document.querySelectorAll('.read-more-button');
+   
+       readMoreButtons.forEach(function(button) {
+           button.addEventListener('click', function() {
+               document.getElementById('popup-form').classList.remove('hidden');
+   
+               // Retrieve the title and set it for the corresponding card
+               const card = button.closest('.relative');
+               const titleElement = card.querySelector('#title_card'); // Update the selector to use id
+               const titleInput = document.getElementById('titleInput');
+   
+               const descrElement = card.querySelector('#descreption_card'); 
+               const descreptionInput = document.getElementById('descInput');
+   
+               const gravityElement = card.querySelector('#gravity_card');
+               const gravityInput = document.getElementById('gravityInput');
+   
+              
+               const taskId = card.querySelector('#idTaskForjs').textContent.trim();
+               const taskIdInput = document.getElementById('titleId');
+               const url = 'http://localhost:8080/supervisor/tasks/' + taskId;
+               console.log(taskId);
+              // window.location.href = url;
+   
+   
+   
+               titleInput.value = titleElement.textContent.trim();
+               descreptionInput.value = descrElement.textContent.trim();
+               gravityInput.value = gravityElement.textContent.trim();
+               taskIdInput.value = taskId;
+              
+   
+           });
+       });
+   
+       document.getElementById('close-form').addEventListener('click', function() {
+           document.getElementById('popup-form').classList.add('hidden');
+       });
+   });
+     
+   </script>
+   <script>
+      
+   
+   
+   
+   
+       document.addEventListener("DOMContentLoaded", function() {
+           const readMoreButtons = document.querySelectorAll('.read-more-button');
+   
+           readMoreButtons.forEach(function(button) {
+               button.addEventListener('click', function() {
+                   document.getElementById('popup-form').classList.remove('hidden');
+               });
+           });
+   
+           document.getElementById('close-form').addEventListener('click', function() {
+               document.getElementById('popup-form').classList.add('hidden');
+           });
+       });
+   </script>
+
+<script>
+    // Function to filter table rows based on search query
+    function filterTable() {
+        var input, filter, table, tbody, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableBody");
+        tr = table.getElementsByTagName("tr");
+        
+        // Loop through all table rows, hide those that don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break; // Break loop if one of the td matches
+                    } else {
+                        tr[i].style.display = "none"; // Hide row if no match
+                    }
+                }
+            }
+        }
+    }
+    
+    // Add event listener to input field to trigger filtering on input
+    document.getElementById("searchInput").addEventListener("input", filterTable);
+</script>
+
+<script>
+    window.jsPDF = window.jspdf.jsPDF;
+
+    // Define the downloadPDF function
+    function downloadPDF() {
+      // Create a new jsPDF instance
+      const doc = new jsPDF();
+
+      // Add title
+      const title = "Report of the Week";
+      doc.setFontSize(16);
+      doc.text(title, 20, 20);
+
+      // Add date and time
+      const date = new Date();
+      const dateString = "Date: " + date.toLocaleDateString();
+      const timeString = "Time: " + date.toLocaleTimeString();
+      doc.setFontSize(12);
+      doc.text(dateString, 20, 30);
+      doc.text(timeString, 20, 40);
+
+      // Capture the table content
+      const table = document.getElementById('tableBody');
+
+      // Remove the last column (the one with "More" header)
+      const rows = table.rows;
+      for (let i = 0; i < rows.length; i++) {
+        rows[i].deleteCell(-1);
+      }
+
+      // Convert the table content into a PDF format
+      doc.setFontSize(12);
+      doc.text(20, 50, 'Table Content:');
+      doc.autoTable({ html: table, startY: 60 }); // Adjust startY to leave space for title, date, and time
+
+      // Download the PDF
+      doc.save('table_content.pdf');
+    }
+</script>
+
+
+<script>
+    function formemp(){
+    let timerInterval;
+Swal.fire({
+  title: "The Tasks are Initializing!",
+  html: "Download the  report in <b></b>.",
+  timer: 100000,
+  timerProgressBar: true,
+  didOpen: () => {
+    Swal.showLoading();
+    const timer = Swal.getPopup().querySelector("b");
+    timerInterval = setInterval(() => {
+      timer.textContent = `${Swal.getTimerLeft()}`;
+    }, 100);
+  },
+  willClose: () => {
+    clearInterval(timerInterval);
+  }
+}).then((result) => {
+  /* Read more about handling dismissals below */
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log("I was closed by the timer");
+  }
+});
+
+    }
+</script>
 
 
         <!-- Bootstrap Bundle with Popper -->

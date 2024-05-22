@@ -3,25 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar and Sidebar</title>
+    <title>Home COR</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="../CSS/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+  
 </head>
 <body>
    
+
+    <style>
+        .emp-profile {
+    border: 1px  black; /* Border style, width, and color */
+}
+    </style>
 
         <!-- Navbar -->
     <!-- Your navbar code goes here -->
 
 
-  <div class="flex flex-no-wrap">
+
+    <div class="flex flex-no-wrap">
         <!-- Sidebar starts -->
         <!-- Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] -->
-        <div style="min-height: 1000px" class="w-64 absolute sm:relative bg-blue-900 shadow md:h-full flex-col justify-between hidden sm:flex">
+        <div style="min-height: 716px" class="w-64 absolute sm:relative bg-blue-900 shadow md:h-full flex-col justify-between hidden sm:flex">
             <div class="px-8">
                 <div class="bg-slate-300 rounded-full p-12  mr-5 flex items-center justify-center mt-8" style="width: 170px; height: 170px;">
                   <img class="w-full h-full" style="width: 120px; height: 100px;" src="/images/directeur.png" alt="Logo">
@@ -105,147 +111,83 @@
                   </a>
                     <nav class="contents font-semibold text-base text-black lg:text-lg">
                     </nav>
-                    <a  th:href="@{/logout}">
-                        <button class="border border-black text-black bg-white  rounded-2xl font-bold px-7 mr-3 py-2 hover:bg-gray-200">
-                            Log Out
-                        </button>
-                    </a>
+                    <form th:action="@{/logout}" method="post">
+                      <button type="submit" class="border border-black text-black bg-white  rounded-2xl font-bold px-7 mr-3 py-2 hover:bg-gray-200">
+                          Log Out
+                      </button>
+                  </form>
                     
                   </div>
               </header>
            
-           
-           
+       
+
+
+              
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <form th:action="@{/addEmp}" method="post">
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        User Information
+                <form method="post" th:action="@{/coordinator/updatePassword}">
+                    <h6 class="text-blueGray-400 text-sm mt-9 mb-6 font-bold uppercase">
+                        Edit your  Password
                     </h6>
                     <div class="flex flex-wrap">
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="firstName">
-                                    First Name
+                                    Old Password
+
                                 </label>
-                                <input  th:value="${NewEmp.firstName}"  type="text" id="firstName" name="firstName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                                <input   type="password" id="oldPassword" name="oldPassword" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-slate-200 text-red-500 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                             </div>
                         </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="lastName">
-                                    Last Name
-                                </label>
-                                <input  required th:value="${NewEmp.lastName}"  type="text" id="lastName" name="lastName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-6/12 px-4">
+                      
+                        <div class="w-full lg:w-6/12 px-4 ">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="email">
-                                    Email Address
-                                </label>
-                                <input required th:value="${NewEmp.email}" type="email" id="email" name="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                                    New Password                                </label>
+                                <input  type="password" id="newPassword" name="newPassword" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-slate-200 text-red-500  rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                             </div>
                         </div>
-                        <div class="w-full lg:w-6/12 px-4">
+                        <div class="w-full lg:w-6/12 px-4 mt-8">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="phoneNumber">
-                                    Phone Number
+                                    Confirm New Password  
                                 </label>
-                                <input  required th:value="${NewEmp.phoneNumber}" type="tel" id="phoneNumber" name="phoneNumber" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
+                                <input   type="password" id="confirmNewPassword" name="confirmNewPassword" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-slate-200 text-red-500  rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="">
                             </div>
-                        </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="sex">
-                                    Sex
-                                </label>
-                                <div class="flex items-center">
-                                    <input  required th:value="${NewEmp.sex == null ? 'male' : user.sex}"   type="radio" id="maleInput" name="sex" value="male" class="rounded-md mr-2">
-                                    <label for="maleInput" class="text-sm text-blueGray-600">Male</label>
-                                    <input  required th:value="${NewEmp.sex == null ? 'female' : user.sex}"  type="radio" id="femaleInput" name="sex" value="female" class="rounded-md ml-4 mr-2">
-                                    <label for="femaleInput" class="text-sm text-blueGray-600">Female</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="mt-6 border-b-1 border-blueGray-300">
-
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        Account Information
-                    </h6>
-                    <div class="flex flex-wrap">
-                        <div class="w-full lg:w-12/12 px-4">
-                          <div class="relative w-full mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" >
-                             Login
-                            </label>
-                            <input required th:value="${NewEmp.login}"  name="login" type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
-                          </div>
-                        </div>
-                        <div class="w-full lg:w-4/12 px-4">
-                          <div class="relative w-full mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                             Password
-                            </label>
-                            <input  required th:value="${NewEmp.password}" type="password" name="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="New York">
-                          </div>
-                        </div>
-                        <div class="w-full lg:w-4/12 px-4">
-                          <div class="relative w-full mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                              Confirm your Password
-                            </label>
-                            <input  th:value="${NewEmp.confirmPassword}"  name="confirmPassword" type="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="United States">
-                          </div>
-                        </div>
-                       
-                      </div>
-
-                    <hr class="mt-6 border-b-1 border-blueGray-300">
-
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        Services & Roles
-                    </h6>
-                    <div class="w-full lg:w-4/12 px-4">
-                        <div class="relative  mb-3">
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="servicesDropdown">
-                                Services
-                            </label>
-                            <select name="services" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                                <option th:each="service : ${listeService}" th:value="${service.id}" th:text="${service.name}"></option>
-                                <!-- Add more options as needed -->
-                            </select>
                         </div>
                        
                     </div>
-                    <button onclick="formemp()" type="submit" class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
-                        Add New Employee
+
+                 
+                   
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                        <p th:text="${error}">Error Message Here</p>
+                    </div>                    
+
+                 
+                                     
+
+                   
+                   
+                   
+
+<br>
+                    <button type="submit" class="bg-blue-700 text-white mt-6 ml-6 active:bg-pink-600 font-bold   px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear ">
+                       Edit Password
                     </button>
                 </form>
             </div>
 
-
-     
+           
+          
+               <!--<span th:text="${#authentication.name}"> </span> -->
+           </div>
               
           </div>
 
       </div>
 
       
-
-
-      <script>
-        function formemp(){
-            Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Your work has been saved",
-  showConfirmButton: false,
-  timer: 5500
-});
-        }
-      </script>
 
 
 

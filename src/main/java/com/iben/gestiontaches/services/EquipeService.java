@@ -11,4 +11,6 @@ public interface EquipeService {
 
     List<Equipe> getAllEquipes();
     void deleteEquipe(Long idTeam);
+    Equipe findTeam(Long idTeam);
+  
 }
