@@ -75,7 +75,6 @@ public class ConfigSecurity {
 
 
 
-
         http.authorizeHttpRequests().requestMatchers("../CSS/style.css").permitAll();
         http.authorizeHttpRequests().requestMatchers("../path/to/datatables.min.js").permitAll();
 
@@ -83,11 +82,6 @@ public class ConfigSecurity {
        // http.authorizeHttpRequests().requestMatchers("/**/bootstrap.min.js").permitAll();
        // http.authorizeHttpRequests().requestMatchers("/**/bootstrap.min.css").permitAll();
        http.authorizeHttpRequests().requestMatchers("../CSS/detailtaskstyle.css").permitAll();
-
-
-
-
-
 
 
         http.authorizeHttpRequests().anyRequest().authenticated();

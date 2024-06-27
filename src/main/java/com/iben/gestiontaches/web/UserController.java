@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.iben.gestiontaches.entities.Equipe;
 import com.iben.gestiontaches.entities.Message;
 import com.iben.gestiontaches.entities.Service;
 import com.iben.gestiontaches.entities.Task;
 import com.iben.gestiontaches.entities.User;
 import com.iben.gestiontaches.entities.UserTaskAssignment;
 import com.iben.gestiontaches.enums.deactivatedFlag;
+import com.iben.gestiontaches.repository.EquipeRepository;
 import com.iben.gestiontaches.repository.TaskRepository;
 import com.iben.gestiontaches.repository.UserRepository;
 import com.iben.gestiontaches.repository.UserTaskAssignmentRepository;
@@ -48,8 +50,8 @@ public class UserController {
     private MessageServiceImplementation messageServiceImplementation;
     private UserServices userServices;
 
-
-     private PasswordEncoder passwordEncoder;
+    private EquipeRepository equipeRepository;
+    private PasswordEncoder passwordEncoder;
 
     // @GetMapping("/employee/home")
     // public String home() {
@@ -180,14 +182,16 @@ public class UserController {
         String id = userRepository.findIdByLogin(login);
         List<Task> tasks = taskService.getTasksbyOp(id);
         model.addAttribute("tasks", tasks);
-        // System.out.println("--------------------------------");
-        // System.out.println(tasks);
+        model.addAttribute("taskUtility", new UserController(userRepository, accountService, taskService,
+                taskRepository, userTaskRepo, messageServiceImplementation, userServices, equipeRepository, passwordEncoder));
         return "employee/home";
     }
 
     @GetMapping("/employee/profile")
     public String profile(Model model, Authentication auth) {
         User userForEdit = userRepository.findUserBylogin(auth.getName());
+        List<Equipe> teams = equipeRepository.findEquipeByUserId(userForEdit.getId());
+        model.addAttribute("team", teams);
         model.addAttribute("userForEdit", userForEdit);
         return "employee/profile";
     }
@@ -242,7 +246,7 @@ public class UserController {
 
         messageServiceImplementation.addMessageBySup(message.getContent(), LocalDate.now(), taskId, user.getId());
 
-        return "redirect:/employee/conversation";
+        return "redirect:/employee/conversation?id=" + taskId;
     }
 
     @GetMapping("/employee/editInfo")
@@ -286,33 +290,43 @@ public class UserController {
     }
 
     @PostMapping("/reset_password")
-public String forgotPassword(@RequestParam("email") String email, @RequestParam("UserName") String userName,
-        Model model) {
-    User user = userRepository.findUserBylogin(userName);
-    if (user == null) {
-        System.out.println("Error: User not found!");
-        model.addAttribute("error", "User not found");
-        return "forgot_password";
-    } else {
-        if (user.getEmail().equals(email)) {
-            System.out.println("Email Matched");
-            // Generate a new random password
-            String newPassword = userServices.generateRandomPassword();
-            System.out.println(newPassword);
-            // Update the user's password in the database
-            user.setPassword(passwordEncoder.encode(newPassword)); // Assuming user.setPassword updates the password in the database
-            userRepository.save(user); // Save the updated user object
-            // Send the new password to the user via email or provide it on the reset password page
-
-
-            userServices.sendNewPasswordByEmail(user.getEmail(), newPassword); // Implement this method to send email
-            return "login"; // Redirect to the reset password page
+    public String forgotPassword(@RequestParam("email") String email, @RequestParam("UserName") String userName,
+            Model model) {
+        User user = userRepository.findUserBylogin(userName);
+        if (user == null) {
+            System.out.println("Error: User not found!");
+            model.addAttribute("error", "User not found");
+            return "forgot_password";
         } else {
-            System.out.println("Email Not Matched");
-            model.addAttribute("error", "Email not matched");
-            return "login";
+            if (user.getEmail().equals(email)) {
+                System.out.println("Email Matched");
+                // Generate a new random password
+                String newPassword = userServices.generateRandomPassword();
+                System.out.println(newPassword);
+                // Update the user's password in the database
+                user.setPassword(passwordEncoder.encode(newPassword)); // Assuming user.setPassword updates the password
+                                                                       // in the database
+                userRepository.save(user); // Save the updated user object
+                // Send the new password to the user via email or provide it on the reset
+                // password page
+
+                userServices.sendNewPasswordByEmail(user.getEmail(), newPassword); // Implement this method to send
+                                                                                   // email
+                return "login"; // Redirect to the reset password page
+            } else {
+                System.out.println("Email Not Matched");
+                model.addAttribute("error", "Email not matched");
+                return "login";
+            }
         }
     }
-}
+
+    public String getDeadline(Task task) {
+        if (task == null || task.getCalendar() == null || task.getCalendar().getStartDate() == null) {
+            return "Empty"; // Return "Empty" if task or calendar or startDate is null
+        }
+        LocalDate deadline = task.getCalendar().getStartDate().plusDays(task.getCalendar().getDuration());
+        return deadline.toString(); // Convert LocalDate to String
+    }
 
 }

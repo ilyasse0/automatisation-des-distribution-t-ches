@@ -49,9 +49,11 @@
                 <i class="fas fa-bell text-gray-500 text-lg"></i>
             </button>
             <button>
-                <a href="/logout">
-                    <i class="fas fa-user text-gray-500 text-lg"></i>
-                </a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="border border-black text-black bg-white  rounded-2xl font-bold px-7 mr-3 py-2 hover:bg-gray-200">
+                        Log Out
+                    </button>
+                </form>
             </button>
         </div>
     </div>
@@ -62,32 +64,27 @@
         <div style="background-color: #143153;" class="p-2  w-60 flex flex-col hidden md:flex" id="sideNav">
             <nav>
                 <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/home">
-                    <i class="fas fa-home mr-2"></i>HOME
+                    <i class="fas fa-home mr-2"></i>Task Management
                 </a>
                 <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/teams">
-                    <i class="fas fa-file-alt mr-2"></i>ENHANCED-TEAM
+                    <i class="fas fa-file-alt mr-2"></i>Team Management
                 </a>
                 <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/employee">
-                    <i class="fas fa-users mr-2"></i>ENHANCED-EMP
+                    <i class="fas fa-users mr-2"></i>Employ Management
                 </a>
                 <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="/chef_projet/profile">
-                    <i class="fas fa-store mr-2"></i>PROFILE
+                    <i class="fas fa-store mr-2"></i>Profile
                 </a>
                 <a class="block text-white py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white" href="#">
-                    <i class="fas fa-exchange-alt mr-2"></i>Transacciones
+                    <i class="fas fa-exchange-alt mr-2"></i>Logs
                 </a>
             </nav>
 
             <!-- Ítem de Cerrar Sesión -->
-            <a class="block text-white py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-400 hover:to-cyan-300 hover:text-white mt-auto" href="#">
-                <i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión
-            </a>
+         
 
-            <!-- Señalador de ubicación -->
-            <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
+        
 
-            <!-- Copyright al final de la navegación lateral -->
-            <p class="mb-1 px-5 py-3 text-left text-xs text-cyan-500">Copyright WCSLAT@2023</p>
 
         </div>
 
@@ -101,25 +98,26 @@
                 <!-- Sección 1 - Gráfica de Usuarios (disminuida para dispositivos -->
 
                 <div class="bg-white p-4 rounded-md">
-                    <h2 class="text-black text-lg font-semibold pb-1">ACCOUNT STATUS </h2>
+                    <h2 class="text-black text-lg font-semibold pb-1">TEAMS STATUS </h2>
                     <div class="my-1"></div> <!-- Espacio de separación -->
                     <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
-                    <div class="chart-container ml-6" style="position: relative; height:200px; width:400px"> <!-- Increased size -->
-                      <!-- El canvas para la gráfica -->
-                      <canvas id="AccountChart"></canvas>
+                    <div class="chart-container" style="position: relative; height:150px; width:100%">
+                        <!-- El canvas para la gráfica -->
+                        <canvas id="AccountChart"></canvas>
                     </div>
-                  </div>
+                </div>
                 <!-- Sección 1 - Gráfica de Usuarios -->
                    
                 <div class="bg-white p-4 rounded-md">
-                    <h2 class="text-black text-lg font-semibold pb-1">ACCOUNT STATUS </h2>
-                    <div class="my-1"></div> <!-- Espacio de separación -->
-                    <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div> <!-- Línea con gradiente -->
-                    <div class="chart-container ml-6" style="position: relative; height:200px; width:400px"> <!-- Increased size -->
-                      <!-- El canvas para la gráfica -->
-                      <canvas id="Accountcor"></canvas>
+                    <h2 class=" text-lg font-semibold pb-1">SUPERVISOR | OPERATOR </h2>
+                    <div class="my1-"></div> <!-- Espacio de separación -->
+                    <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px  mb-6"></div> <!-- Línea con gradiente -->
+                    <div class="chart-container" style="position: relative; height:150px; width:100%">
+                        <!-- El canvas para la gráfica -->
+                        <canvas id="usersChart"></canvas>
                     </div>
-                  </div>
+                </div>
+
                     <!-- Sección 2 - Gráfica de Comercios -->
                    
 
@@ -134,7 +132,7 @@
                     </div>
                     <input id="searchInput" class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" type="search" placeholder="Search here ...">
                 </div>
-                <table class="w-full table-auto text-sm">
+                <table id="teamTable" class="w-full table-auto text-sm">
                     <thead>
                         <tr class="text-sm leading-normal">
                             <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Name</th>
@@ -197,7 +195,7 @@
         </div>
         <input id="searchInput_doneTask" class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" type="search" placeholder="Search here ...">
     </div>
-    <table class="w-full table-auto text-sm">
+    <table id="tableCor" class="w-full table-auto text-sm">
         <thead>
             <tr class="text-sm leading-normal">
                 <th class="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Name</th>
@@ -261,14 +259,53 @@
 
 <script>
     // Dummy data
-    var activeAccount = 70;
-    var nonActiveAccount = 30;
+  
+
+    var tableRows = document.querySelectorAll("#teamTable tbody tr");
+    var activeAccount =0;
+    var nonActiveAccount =0;
+    var serviceSaisie=0;
+    var serviceTechnical =0;
+    var serviceScanne=0;
+    var serviceControll=0;
+    tableRows.forEach(function(row) {
+    var status = row.cells[1].innerText.trim(); 
+    switch(status) {
+        case "ACTIVE":
+              activeAccount++;
+            break;
+        case "SUSPENDED":
+              nonActiveAccount++;
+            break;
+    }
+
+  
+});
+
+var tableRows2 = document.querySelectorAll("#tableCor tbody tr");
+tableRows2.forEach(function(row) {
+    var status = row.cells[2].innerText.trim(); 
+    switch(status) {
+        case "SAISIE":
+        serviceSaisie++;
+            break;
+        case "TECHNIQUE":
+        serviceTechnical++;
+            break;
+        case "CONTROLLE":
+        serviceControll++;
+            break;
+    }
+
+  
+});
+
 
     // Creating pie chart
     var accountPieChart = new Chart(document.getElementById('AccountChart'), {
       type: 'pie',
       data: {
-        labels: ['Active Account', 'Non-Active Account'],
+        labels: ['Active Team', 'SUSPENDED Team'],
         datasets: [{
           label: 'Account Status',
           data: [activeAccount, nonActiveAccount],
@@ -286,28 +323,27 @@
   </script>
   
 <script>
-    // Dummy data
-    var activeAccount = 70;
-    var nonActiveAccount = 30;
 
-    // Creating pie chart
-    var accountPieChart = new Chart(document.getElementById('Accountcor'), {
-      type: 'pie',
-      data: {
-        labels: ['Active Account', 'Non-Active Account'],
-        datasets: [{
-          label: 'Account Status',
-          data: [activeAccount, nonActiveAccount],
-          backgroundColor: ['#FEC500', '#B10300'],
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          position: 'bottom'
+   
+
+
+    var usersChart = new Chart(document.getElementById('usersChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Saisie', 'Technique' , 'Controlle'],
+            datasets: [{
+                label: 'Number of Users', // Label for the dataset
+                data: [serviceSaisie, serviceTechnical,serviceControll],
+                backgroundColor: ['#8B8B8D', '#00F0FF',"#a15a23",],
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                position: 'bottom' // Ubicar la leyenda debajo del círculo
+            }
         }
-      }
     });
   </script>
 

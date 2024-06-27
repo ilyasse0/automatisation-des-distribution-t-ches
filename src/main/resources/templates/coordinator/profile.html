@@ -46,7 +46,6 @@
                             </svg>
                             <span class="text-sm ml-2">Supervisor</span>
                         </a>
-                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">5</div>
                     </li>
                     <li class="flex w-full justify-between text-gray-300 cursor-pointer items-center mb-6">
                         <a href="/coordinateur/employee" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -59,7 +58,6 @@
                             </svg>
                             <span class="text-sm ml-2">Employees</span>
                         </a>
-                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">5</div>
                     </li>
                     <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                         <a href="/coordinateur/tasks" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -69,7 +67,6 @@
                             </svg>
                             <span class="text-sm ml-2">Tasks</span>
                         </a>
-                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">8</div>
                     </li>
                     <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                         <a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -79,7 +76,6 @@
                             </svg>
                             <span class="text-sm ml-2">Profile</span>
                         </a>
-                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">25</div>
                     </li>
                     <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                         <a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -163,30 +159,22 @@
                               <div class="row pt-1">
                                 <div class="col-6 mb-3">
                                   <h6>Team</h6>  
-                                  <p class="text-blue-700">Team 0A</p>
+                                  <ul>
+                                    <li th:each="team : ${team}">
+                                        <p class="text-blue-700" th:text="${team.nom}">Team Name</p>
+                                        <!-- Assuming "nom" is the property containing the team name -->
+                                    </li>
+                                </ul>
                                 </div>
                                 <div class="col-6 mb-3">
                                   <h6>Service</h6>
-                                  <p class="text-blue-700">Service</p>                                </div>
+                                  <span class="text-blue-600"  th:each="service : ${userForEdit.services}" th:text="${service.name} + ' '"></span>                             </div>
                               </div>
                               
                               
                               <hr class="mt-0 mb-4">
-                              <div class="row pt-1">
-                                <div class="col-6 mb-3">
-                                  <h6>Recent</h6>
-                                  <p class="text-muted">Lorem ipsum</p>
-                                </div>
-                                <div class="col-6 mb-3">
-                                  <h6>Most Viewed</h6>
-                                  <p class="text-muted">Dolor sit amet</p>
-                                </div>
-                              </div>
-                              <div class="d-flex justify-content-start">
-                                <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
-                              </div>
+                             
+                            
                             </div>
                           </div>
                         </div>

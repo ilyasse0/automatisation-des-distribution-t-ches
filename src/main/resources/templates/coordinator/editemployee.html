@@ -40,7 +40,6 @@
                         </svg>
                         <span class="text-sm ml-2">Supervisor</span>
                     </a>
-                    <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">5</div>
                 </li>
                 <li class="flex w-full justify-between text-gray-300 cursor-pointer items-center mb-6">
                     <a href="/coordinateur/employee" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -53,7 +52,6 @@
                         </svg>
                         <span class="text-sm ml-2">Employees</span>
                     </a>
-                    <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">5</div>
                 </li>
                 <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                     <a href="/coordinateur/tasks" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -63,7 +61,6 @@
                         </svg>
                         <span class="text-sm ml-2">Tasks</span>
                     </a>
-                    <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">8</div>
                 </li>
                 <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                     <a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -73,7 +70,6 @@
                         </svg>
                         <span class="text-sm ml-2">Profile</span>
                     </a>
-                    <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">25</div>
                 </li>
                 <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                     <a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -165,15 +161,14 @@
                     <div class="flex flex-wrap">
                         <div class="w-full lg:w-4/12 px-4 mt-6">
                             <div class="flex items-center">
-                                
-                                <input type="checkbox" id="activateAccount" name="activateAccount" class="form-checkbox h-5 w-5 text-blue-600" th:checked="${userEdit.status == T(com.iben.gestiontaches.enums.deactivatedFlag).ACTIVE}">
-                                <label for="activateAccount" class="ml-2 block text-sm text-blueGray-600">ACTIVE</label>
+                                <input type="radio" id="statusActive" name="status" value="ACTIVE" class="form-radio h-5 w-5 text-blue-600" th:checked="${userEdit.status == T(com.iben.gestiontaches.enums.deactivatedFlag).ACTIVE}">
+                                <label for="statusActive" class="ml-2 block text-sm text-blueGray-600">ACTIVE</label>
                             </div>
                         </div>
                         <div class="w-full lg:w-4/12 px-4 mt-6">
                             <div class="flex items-center">
-                                <input type="checkbox" id="deactivateAccount" name="deactivateAccount" class="form-checkbox h-5 w-5 text-blue-600" th:checked="${userEdit.status == T(com.iben.gestiontaches.enums.deactivatedFlag).SUSPENDED}">
-                                <label for="deactivateAccount" class="ml-2 block text-sm text-blueGray-600">SUSPENDED</label>
+                                <input type="radio" id="statusSuspended" name="status" value="SUSPENDED" class="form-radio h-5 w-5 text-blue-600" th:checked="${userEdit.status == T(com.iben.gestiontaches.enums.deactivatedFlag).SUSPENDED}">
+                                <label for="statusSuspended" class="ml-2 block text-sm text-blueGray-600">SUSPENDED</label>
                             </div>
                         </div>
                     </div>
@@ -215,11 +210,11 @@
                     <span class="text-red-500 py-11" >please make sure to have permission to change the role or the service of the user !</span>
                     <br>
                     <br>
-                    <span class="text-red-500 py-11 mt-12" >Please note that the update  will be store in the logs !</span>
+                    
 
 <br>
-                    <button type="submit" class="bg-blue-700 text-white mt-6 active:bg-pink-600 font-bold   px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear ">
-                        Add New Employee
+                    <button type="submit" class="bg-blue-700 text-white  active:bg-pink-600 font-bold   px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear ">
+                        Edit  Employee
                     </button>
                 </form>
             </div>

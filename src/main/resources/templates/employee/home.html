@@ -32,7 +32,7 @@
     <div class="flex flex-no-wrap">
         <!-- Sidebar starts -->
         <!-- Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] -->
-        <div style="min-height: 916px" class="w-64 absolute sm:relative bg-zinc-800 shadow md:h-full flex-col justify-between hidden sm:flex">
+        <div style="min-height: 916px" class="w-64 absolute sm:relative bg-stone-700 shadow md:h-full flex-col justify-between hidden sm:flex">
             <div class="px-8">
                 <div class="bg-slate-300 rounded-full p-12  mr-5 flex items-center justify-center mt-3" style="width: 170px; height: 170px;">
                   <img class="w-full h-full" style="width: 120px; height: 100px;" src="/images/employee.png" alt="Logo">
@@ -51,7 +51,6 @@
                             </svg>
                             <span class="text-sm ml-2">Tasks</span>
                         </a>
-                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">5</div>
                     </li>
                  
                     <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
@@ -62,7 +61,6 @@
                             </svg>
                             <span class="text-sm ml-2">Profile</span>
                         </a>
-                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">25</div>
                     </li>
                     <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                         <a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -94,8 +92,8 @@
   
                 <!-- Place your content here -->
   
-                <header class="bg-white rounded-3xl bg-opacity-5 text-white shadow-lg hidden md:block">
-                  <div class=" bg-zinc-800 rounded-3xl container mx-auto flex items-center justify-between h-24">
+                <header >
+                  <div class=" bg-stone-700 rounded-3xl container mx-auto flex items-center justify-between h-24">
                     <a href="" class="flex items-center">
                       <img class="w-48 h-auto" src="/images/LOGO_header.png" alt="Logo">
                   </a>
@@ -136,7 +134,7 @@
                
               </p>
               <p class="text-xs text-surface/75  dark:text-blue-500">
-                Last updated 3 mins ago
+                DeadLine : <span class="text-red-600 text-xs font-bold" th:text="${taskUtility.getDeadline(task)}"></span> 
               </p>
               <a  th:href="@{/employee/detailTask(id=${task.id})}"  class="inline-flex items-center px-3 py-2 mt-2 text-sm font-medium text-center text-white bg-zinc-800 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <button class="read-more-button">Enter</button> 

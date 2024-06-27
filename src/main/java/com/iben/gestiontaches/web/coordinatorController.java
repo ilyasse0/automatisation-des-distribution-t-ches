@@ -180,7 +180,10 @@ public class coordinatorController {
     @GetMapping("/coordinateur/profile")
     public String profile(Model model, Authentication auth) {
         User userForEdit = userRepository.findUserBylogin(auth.getName());
+        List<Equipe> teams = equipeRepository.findEquipeByUserId(userForEdit.getId());
         model.addAttribute("userForEdit", userForEdit);
+        System.out.println(teams);
+        model.addAttribute("team", teams);
         return "coordinator/profile";
     }
 
@@ -211,6 +214,13 @@ public class coordinatorController {
     @PostMapping("/coordinateur/updateSupervispr/{id}")
     public String postMethodName(User supervisor, @PathVariable("id") String id) {
         User user = userRepository.findById(id).get();
+         user.setLastName(supervisor.getLastName());
+        user.setEmail(supervisor.getEmail());
+        user.setPhoneNumber(supervisor.getPhoneNumber());
+        user.setStatus(supervisor.getStatus());
+
+      
+        // user.setFirstName(supervisor.getFirstName());
         user.setRoles(supervisor.getRoles());
         user.setServices(supervisor.getServices());
         // System.out.println(supervisor.getServices());
@@ -261,7 +271,7 @@ public class coordinatorController {
             return "Empty"; // Return "Empty" if task or calendar or startDate is null
         }
         LocalDate deadline = task.getCalendar().getStartDate().plusDays(task.getCalendar().getDuration());
-        System.out.println(deadline);
+       // System.out.println(deadline);
         return deadline.toString(); // Convert LocalDate to String
     }
 
@@ -318,5 +328,43 @@ public class coordinatorController {
             return "error";
         }
     }
+
+
+    @GetMapping("/coordinateur/editTask")
+    public String editTask(@RequestParam(name = "id") Long taskId, Model model) {
+        
+       
+       Task task = taskRepository.findById(taskId).get();
+       model.addAttribute("task", task);
+       List<Gravity> listeGravity = gravityService.getAllGravity();
+       model.addAttribute("listeGravity", listeGravity);
+
+       Gravity gravity = task.getGravity();
+       model.addAttribute("gravity", gravity);
+      // System.out.println(task.getGravity().getPriority());
+
+       
+
+     
+        return "coordinator/editTask";
+    }
+
+    @PostMapping("/coordinateur/updateTask/{id}")
+    public String updateTask(Task task, @PathVariable("id") Long id) {
+        Task tasktoUpdate = taskRepository.findById(task.getId()).get();
+        tasktoUpdate.setTitle(task.getTitle());
+        tasktoUpdate.setDescription(task.getDescription());
+
+       
+
+      
+      
+
+        taskRepository.save(tasktoUpdate);
+        System.out.println("Updated done!");
+
+        return "redirect:/coordinateur/tasks";
+    }
+
 
 }

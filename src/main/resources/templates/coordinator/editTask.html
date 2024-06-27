@@ -20,7 +20,7 @@
     <div class="flex flex-no-wrap">
         <!-- Sidebar starts -->
         <!-- Remove class [ hidden ] and replace [ sm:flex ] with [ flex ] -->
-        <div style="min-height: 916px" class="w-64 absolute sm:relative bg-blue-900 shadow md:h-full flex-col justify-between hidden sm:flex">
+        <div style="min-height: 716px" class="w-64 absolute sm:relative bg-blue-900 shadow md:h-full flex-col justify-between hidden sm:flex">
             <div class="px-8">
                 <div class="bg-slate-300 rounded-full p-12  mr-5 flex items-center justify-center mt-8" style="width: 170px; height: 170px;">
                   <img class="w-full h-full" style="width: 120px; height: 100px;" src="/images/directeur.png" alt="Logo">
@@ -39,6 +39,7 @@
                             </svg>
                             <span class="text-sm ml-2">Supervisor</span>
                         </a>
+                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">5</div>
                     </li>
                     <li class="flex w-full justify-between text-gray-300 cursor-pointer items-center mb-6">
                         <a href="/coordinateur/employee" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -51,6 +52,7 @@
                             </svg>
                             <span class="text-sm ml-2">Employees</span>
                         </a>
+                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">5</div>
                     </li>
                     <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                         <a href="/coordinateur/tasks" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -60,6 +62,7 @@
                             </svg>
                             <span class="text-sm ml-2">Tasks</span>
                         </a>
+                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">8</div>
                     </li>
                     <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                         <a href="/coordinateur/profile" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -69,6 +72,7 @@
                             </svg>
                             <span class="text-sm ml-2">Profile</span>
                         </a>
+                        <div class="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">25</div>
                     </li>
                     <li class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
                         <a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
@@ -109,7 +113,7 @@
                   </div>
               </header>
            
-              <form th:action="@{/addTask}"  method="post"> 
+              <form th:action="@{/coordinateur/updateTask/{id}(id=${task.id})}"  method="post"> 
                 <input type="hidden" name="userId" th:value="${userId}" />
           <div id="form" class="px-2">
               <div class="flex flex-no-wrap items-start">
@@ -141,7 +145,8 @@
                             </p>
                             <div class="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one"> 
                         <select  name="gravity" id="servicesDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring  w-full ease-linear transition-all duration-150 h-full w-full px-5 py-4">
-                          <option th:each="gravity : ${listeGravity}" th:value="${gravity.id}" th:text="${gravity.priority}"></option>
+                            <option th:each="gravity : ${gravity}" th:value="${gravity.id}" th:text="${gravity.priority}"></option>
+                            <option th:each="gravity : ${listeGravity}" th:value="${gravity.id}" th:text="${gravity.priority}"></option>
                           <!-- Add more options as needed -->
                       </select>
                       </div>
@@ -159,10 +164,11 @@
                             <textarea rows="8"
                               class="peer h-full min-h-[100px] w-full !resize-none  rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50 bg-white  rounded text-sm shadow"
                               placeholder=" "
-                              th:value="${task.description}"
+                              th:text="${task.description}"
                               required
                               name="description"></textarea>
                             <label
+                           
                               class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                               Your Description
                             </label>

@@ -2,9 +2,11 @@ package com.iben.gestiontaches.web;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.iben.gestiontaches.entities.Calendar;
+import com.iben.gestiontaches.entities.Equipe;
 import com.iben.gestiontaches.entities.Gravity;
 import com.iben.gestiontaches.entities.Message;
 import com.iben.gestiontaches.entities.Service;
 import com.iben.gestiontaches.entities.Task;
 import com.iben.gestiontaches.entities.User;
 import com.iben.gestiontaches.entities.UserTaskAssignment;
+import com.iben.gestiontaches.repository.EquipeRepository;
 import com.iben.gestiontaches.repository.TaskRepository;
 import com.iben.gestiontaches.repository.UserRepository;
 import com.iben.gestiontaches.repository.UserTaskAssignmentRepository;
@@ -44,6 +48,7 @@ public class supervisorController {
     private AccountService accountService;
     private MessageServiceImplementation messageServiceImplementation;
     private UserTaskAssignmentRepository assignmentRepository;
+    private EquipeRepository equipeRepository;
 
     // @PostMapping("/addTask")
     // public String addTask(Task task, Calendar calendar, @RequestParam(name =
@@ -118,7 +123,7 @@ public class supervisorController {
         model.addAttribute("userAssign", new UserTaskAssignment());
 
         model.addAttribute("taskUtility", new supervisorController(taskService, taskRepository, userRepository,
-                gravityService, accountService, messageServiceImplementation, assignmentRepository));
+                gravityService, accountService, messageServiceImplementation, assignmentRepository, equipeRepository));
 
         model.addAttribute("listeEmp", users);
         return "supervisor/tasks";
@@ -141,7 +146,7 @@ public class supervisorController {
 
         messageServiceImplementation.addMessageBySup(message.getContent(), LocalDate.now(), taskId, user.getId());
 
-        return "redirect:/supervisor/conversation";
+        return "redirect:/supervisor/conversation?id=" + taskId;
     }
 
     @GetMapping("/supervisor/conversation")
@@ -150,13 +155,15 @@ public class supervisorController {
         List<Message> messagesSup = messageServiceImplementation.fetchMessagesForSup(userId, taskId);
         List<Message> messagesOp = messageServiceImplementation.fetchMessagesForOp(userId, taskId);
 
-        System.out.println("THE MESSAGE LISTE!");
-        for (Message message : messagesSup) {
-            message.getContent();
-        }
+        // Combine messages from supervisors and employees into a single list
+        List<Message> combinedMessages = Stream.concat(messagesSup.stream(), messagesOp.stream())
+                .collect(Collectors.toList());
+        combinedMessages.sort(Comparator.comparing(Message::getDate_Creation));
 
-        model.addAttribute("messagesSup", messagesSup);
-        model.addAttribute("messagesOp", messagesOp);
+        Task task = taskRepository.findById(taskId).get();
+
+        model.addAttribute("combinedMessages", combinedMessages);
+        model.addAttribute("task", task);
         model.addAttribute("mesg", new Message());
 
         return "supervisor/Conversation";
@@ -165,6 +172,8 @@ public class supervisorController {
     @GetMapping("/supervisor/profile")
     public String profile(Model model, Authentication auth) {
         User userForEdit = userRepository.findUserBylogin(auth.getName());
+        List<Equipe> teams = equipeRepository.findEquipeByUserId(userForEdit.getId());
+        model.addAttribute("team", teams);
         model.addAttribute("userForEdit", userForEdit);
         return "supervisor/profile";
     }
@@ -204,7 +213,7 @@ public class supervisorController {
             return "Empty"; // Return "Empty" if task or calendar or startDate is null
         }
         LocalDate deadline = task.getCalendar().getStartDate().plusDays(task.getCalendar().getDuration());
-       
+
         return "Due at: " + deadline.toString(); // Convert LocalDate to String
     }
 
@@ -213,34 +222,33 @@ public class supervisorController {
         return "supervisor/editInfo";
     }
 
-
     @PostMapping("/supervisor/updatePassword")
     public String updatePassword(@RequestParam("oldPassword") String oldPassword,
-                                 @RequestParam("newPassword") String newPassword,
-                                 @RequestParam("confirmNewPassword") String confirmNewPassword,
-                                 Authentication authentication,
-                                 Model model) {
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmNewPassword") String confirmNewPassword,
+            Authentication authentication,
+            Model model) {
         String username = authentication.getName();
         User user = userRepository.findUserBylogin(username);
-        
+
         // Verify old password
         if (!accountService.verifyPassword(user, oldPassword)) {
             // Old password doesn't match, return with an error message
             model.addAttribute("error", "Old password is incorrect.");
-            return "supervisor/editInfo";    }
-    
+            return "supervisor/editInfo";
+        }
+
         // Confirm new password
         if (!newPassword.equals(confirmNewPassword)) {
             model.addAttribute("error", "New passwords do not match.");
             return "supervisor/editInfo";
         }
-    
+
         // Update password
         System.out.println("Password Upadated!");
         accountService.updatePassword(user, newPassword);
-        
+
         return "redirect:/supervisor/profile";
     }
-    
 
 }
